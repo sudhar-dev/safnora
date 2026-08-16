@@ -1,41 +1,82 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
- */
-
 import { Platform } from 'react-native';
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
+export const SAFNORA_BRAND = {
+  name: 'SAFNORA',
+  tagline: 'Journeys Together. Memories Forever.',
+  sihProblemStatement: 'SIH25082',
+};
 
 export const Colors = {
   light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
+    text: '#0F172A',
+    textSecondary: '#475569',
+    textMuted: '#94A3B8',
+    background: '#F8FAFC',
+    surface: '#FFFFFF',
+    surfaceSubtle: '#F1F5F9',
+    border: '#E2E8F0',
+    tint: '#0284C7',
+    primary: '#0284C7',
+    primaryDark: '#0369A1',
+    accent: '#38BDF8',
+    secondary: '#6366F1',
+    success: '#10B981',
+    warning: '#F59E0B',
+    danger: '#EF4444',
+    icon: '#64748B',
+    tabIconDefault: '#94A3B8',
+    tabIconSelected: '#0284C7',
+    card: '#FFFFFF',
+    shadow: 'rgba(15, 23, 42, 0.08)',
   },
   dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
+    text: '#F8FAFC',
+    textSecondary: '#CBD5E1',
+    textMuted: '#64748B',
+    background: '#0B0F19',
+    surface: '#1E293B',
+    surfaceSubtle: '#0F172A',
+    border: '#334155',
+    tint: '#38BDF8',
+    primary: '#38BDF8',
+    primaryDark: '#0284C7',
+    accent: '#818CF8',
+    secondary: '#A5B4FC',
+    success: '#34D399',
+    warning: '#FBBF24',
+    danger: '#F87171',
+    icon: '#94A3B8',
+    tabIconDefault: '#64748B',
+    tabIconSelected: '#38BDF8',
+    card: '#1E293B',
+    shadow: 'rgba(0, 0, 0, 0.4)',
   },
+};
+
+export const Spacing = {
+  xs: 4,
+  sm: 8,
+  md: 12,
+  lg: 16,
+  xl: 24,
+  xxl: 32,
+  xxxl: 48,
+};
+
+export const BorderRadius = {
+  xs: 4,
+  sm: 8,
+  md: 12,
+  lg: 16,
+  xl: 24,
+  full: 9999,
 };
 
 export const Fonts = Platform.select({
   ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
     sans: 'system-ui',
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
     serif: 'ui-serif',
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
     rounded: 'ui-rounded',
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
     mono: 'ui-monospace',
   },
   default: {
