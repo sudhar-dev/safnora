@@ -16,18 +16,23 @@ import { useAuth } from '@/context/AuthContext';
 import { SAFNORA_BRAND } from '@/constants/theme';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 
-export default function LoginScreen() {
+export default function SignUpScreen() {
   const router = useRouter();
   const { signIn } = useAuth();
 
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+  const [agreeTerms, setAgreeTerms] = useState(true);
   const [errorMsg, setErrorMsg] = useState('');
 
-  const handleLogin = async () => {
-    if (!email || !password) {
-      setErrorMsg('Please enter both email and password.');
+  const handleSignUp = async () => {
+    if (!fullName || !email || !password) {
+      setErrorMsg('Please fill in all required fields.');
+      return;
+    }
+    if (!agreeTerms) {
+      setErrorMsg('Please accept the terms and privacy policy to continue.');
       return;
     }
     setErrorMsg('');
@@ -42,7 +47,7 @@ export default function LoginScreen() {
         style={{ flex: 1 }}
       >
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-          {/* Header Back & Logo */}
+          {/* Top Back Navigation */}
           <View style={styles.topNav}>
             <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
               <IconSymbol size={22} name="chevron.left" color="#0D253F" />
@@ -56,26 +61,40 @@ export default function LoginScreen() {
               style={styles.logoImage}
               resizeMode="contain"
             />
-            <Text style={styles.title}>Welcome Back!</Text>
-            <Text style={styles.subtitle}>Sign in to access your trip dashboard & group itineraries</Text>
+            <Text style={styles.title}>Create Account</Text>
+            <Text style={styles.subtitle}>Join SAFNORA to start planning collaborative group trips!</Text>
           </View>
 
           {/* Tab Switcher */}
           <View style={styles.tabSwitcher}>
-            <TouchableOpacity style={[styles.tabButton, styles.activeTab]}>
-              <Text style={[styles.tabText, styles.activeTabText]}>Log In</Text>
-            </TouchableOpacity>
             <TouchableOpacity
               style={styles.tabButton}
-              onPress={() => router.push('/(auth)/signup')}
+              onPress={() => router.push('/(auth)/login')}
             >
-              <Text style={styles.tabText}>Sign Up</Text>
+              <Text style={styles.tabText}>Log In</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.tabButton, styles.activeTab]}>
+              <Text style={[styles.tabText, styles.activeTabText]}>Sign Up</Text>
             </TouchableOpacity>
           </View>
 
           {errorMsg ? <Text style={styles.errorText}>{errorMsg}</Text> : null}
 
           {/* Input Fields */}
+          <View style={styles.formGroup}>
+            <Text style={styles.inputLabel}>Full Name</Text>
+            <View style={styles.inputWrapper}>
+              <IconSymbol size={20} name="person.fill" color="#00A896" style={styles.inputIcon} />
+              <TextInput
+                style={styles.input}
+                placeholder="e.g. Thiru Arasu"
+                placeholderTextColor="#94A3B8"
+                value={fullName}
+                onChangeText={setFullName}
+              />
+            </View>
+          </View>
+
           <View style={styles.formGroup}>
             <Text style={styles.inputLabel}>Email Address</Text>
             <View style={styles.inputWrapper}>
@@ -98,42 +117,47 @@ export default function LoginScreen() {
               <IconSymbol size={20} name="lock.fill" color="#00A896" style={styles.inputIcon} />
               <TextInput
                 style={styles.input}
-                placeholder="Enter password"
+                placeholder="At least 6 characters"
                 placeholderTextColor="#94A3B8"
                 value={password}
                 onChangeText={setPassword}
-                secureTextEntry={!showPassword}
+                secureTextEntry
               />
-              <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeIcon}>
-                <IconSymbol size={20} name={showPassword ? 'eye.slash.fill' : 'eye.fill'} color="#64748B" />
-              </TouchableOpacity>
             </View>
           </View>
 
+          {/* Terms Toggle */}
           <TouchableOpacity
-            style={styles.forgotPassword}
-            onPress={() => router.push('/(auth)/forgot-password')}
+            style={styles.termsRow}
+            onPress={() => setAgreeTerms(!agreeTerms)}
+            activeOpacity={0.8}
           >
-            <Text style={styles.forgotText}>Forgot password?</Text>
+            <View style={[styles.checkbox, agreeTerms && styles.checkboxChecked]}>
+              {agreeTerms && <IconSymbol size={14} name="checkmark" color="#FFFFFF" />}
+            </View>
+            <Text style={styles.termsText}>
+              I agree to the <Text style={styles.linkText}>Terms of Service</Text> and{' '}
+              <Text style={styles.linkText}>Privacy Policy</Text>.
+            </Text>
           </TouchableOpacity>
 
-          {/* Login Button */}
-          <TouchableOpacity style={styles.primaryButton} onPress={handleLogin} activeOpacity={0.85}>
-            <Text style={styles.primaryButtonText}>LOG IN</Text>
+          {/* Sign Up Button */}
+          <TouchableOpacity style={styles.primaryButton} onPress={handleSignUp} activeOpacity={0.85}>
+            <Text style={styles.primaryButtonText}>CREATE ACCOUNT</Text>
           </TouchableOpacity>
 
           {/* Divider */}
           <View style={styles.dividerRow}>
             <View style={styles.dividerLine} />
-            <Text style={styles.dividerText}>or continue with</Text>
+            <Text style={styles.dividerText}>or register with</Text>
             <View style={styles.dividerLine} />
           </View>
 
-          {/* Social Google Login Button */}
+          {/* Google Sign In */}
           <TouchableOpacity
             style={styles.googleButton}
             onPress={() => {
-              signIn('google-user@safnora.com');
+              signIn('new-google-user@safnora.com');
               router.replace('/(tabs)');
             }}
             activeOpacity={0.8}
@@ -142,9 +166,8 @@ export default function LoginScreen() {
               source={{ uri: 'https://img.icons8.com/color/48/google-logo.png' }}
               style={styles.googleIcon}
             />
-            <Text style={styles.googleButtonText}>Continue with Google</Text>
+            <Text style={styles.googleButtonText}>Sign Up with Google</Text>
           </TouchableOpacity>
-
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -177,8 +200,8 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   logoImage: {
-    width: 80,
-    height: 80,
+    width: 76,
+    height: 76,
     marginBottom: 12,
   },
   title: {
@@ -259,17 +282,33 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: '#0D253F',
   },
-  eyeIcon: {
-    padding: 6,
-  },
-  forgotPassword: {
-    alignSelf: 'flex-end',
+  termsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 24,
   },
-  forgotText: {
-    color: '#00A896',
+  checkbox: {
+    width: 22,
+    height: 22,
+    borderRadius: 6,
+    borderWidth: 2,
+    borderColor: '#00A896',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 10,
+  },
+  checkboxChecked: {
+    backgroundColor: '#00A896',
+  },
+  termsText: {
     fontSize: 13,
-    fontWeight: '600',
+    color: '#64748B',
+    flex: 1,
+    lineHeight: 18,
+  },
+  linkText: {
+    color: '#00A896',
+    fontWeight: '700',
   },
   primaryButton: {
     height: 52,

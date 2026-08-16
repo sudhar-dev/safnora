@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
@@ -8,10 +8,8 @@ import { ThemeContextProvider } from '@/context/ThemeContext';
 import { AuthProvider } from '@/context/AuthContext';
 import { ToastProvider } from '@/context/ToastContext';
 
-// Keep splash screen visible while assets are loading
-SplashScreen.preventAutoHideAsync().catch(() => {
-  /* reload or environment fallback */
-});
+// Prevent splash screen from auto hiding until ready
+SplashScreen.preventAutoHideAsync().catch(() => {});
 
 export default function RootLayout() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -19,8 +17,8 @@ export default function RootLayout() {
   useEffect(() => {
     async function prepare() {
       try {
-        // Simulate initial setup / asset preloading
-        await new Promise((resolve) => setTimeout(resolve, 800));
+        // Keep splash screen visible for 1.5 seconds
+        await new Promise((resolve) => setTimeout(resolve, 1500));
       } catch (e) {
         console.warn('Splash screen preparation error:', e);
       } finally {
@@ -31,9 +29,10 @@ export default function RootLayout() {
     prepare();
   }, []);
 
-  const onLayoutRootView = useCallback(async () => {
+  // Hide splash screen immediately when appIsReady becomes true
+  useEffect(() => {
     if (appIsReady) {
-      await SplashScreen.hideAsync().catch(() => {});
+      SplashScreen.hideAsync().catch(() => {});
     }
   }, [appIsReady]);
 
@@ -45,13 +44,14 @@ export default function RootLayout() {
     <ThemeContextProvider>
       <AuthProvider>
         <ToastProvider>
-          <Stack screenOptions={{ headerShown: false }} onLayout={onLayoutRootView}>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen name="(trips)" options={{ headerShown: false }} />
             <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
           </Stack>
-          <StatusBar style="light" />
+          <StatusBar style="dark" />
         </ToastProvider>
       </AuthProvider>
     </ThemeContextProvider>
