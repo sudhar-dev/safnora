@@ -3,12 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'rea
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAppTheme } from '@/context/ThemeContext';
 import { SAFNORA_BRAND } from '@/constants/theme';
-import PlusCircle from 'lucide-react-native/dist/esm/icons/plus-circle';
-import Navigation from 'lucide-react-native/dist/esm/icons/navigation';
-import ImageIcon from 'lucide-react-native/dist/esm/icons/image';
-import Banknote from 'lucide-react-native/dist/esm/icons/banknote';
-import Map from 'lucide-react-native/dist/esm/icons/map';
-import Plus from 'lucide-react-native/dist/esm/icons/plus';
+import Feather from '@expo/vector-icons/Feather';
 import { useRouter } from 'expo-router';
 
 export default function HomeScreen() {
@@ -16,10 +11,10 @@ export default function HomeScreen() {
   const router = useRouter();
 
   const quickActions = [
-    { title: 'Create Trip', icon: PlusCircle, route: '/(trips)/add-trip', color: '#00A896' },
-    { title: 'Explore Places', icon: Navigation, route: '/(tabs)/explore', color: '#6366F1' },
-    { title: 'Trip Memories', icon: ImageIcon, route: '/(tabs)/explore', color: '#10B981' },
-    { title: 'Expenses', icon: Banknote, route: '/(trips)/calculator', color: '#F59E0B' },
+    { title: 'Create Trip', icon: 'plus-circle', route: '/(trips)/add-trip', color: '#00A896' },
+    { title: 'Explore Places', icon: 'navigation', route: '/(tabs)/explore', color: '#6366F1' },
+    { title: 'Trip Memories', icon: 'image', route: '/(tabs)/explore', color: '#10B981' },
+    { title: 'Expenses', icon: 'dollar-sign', route: '/(trips)/calculator', color: '#F59E0B' },
   ];
 
   return (
@@ -47,7 +42,6 @@ export default function HomeScreen() {
         <Text style={[styles.sectionTitle, { color: colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
           {quickActions.map((action, idx) => {
-            const IconComp = action.icon;
             return (
               <TouchableOpacity
                 key={idx}
@@ -56,7 +50,7 @@ export default function HomeScreen() {
                 activeOpacity={0.7}
               >
                 <View style={[styles.iconWrapper, { backgroundColor: action.color + '20' }]}>
-                  <IconComp size={24} color={action.color} />
+                  <Feather name={action.icon as any} size={24} color={action.color} />
                 </View>
                 <Text style={[styles.actionTitle, { color: colors.text }]}>{action.title}</Text>
               </TouchableOpacity>
@@ -67,7 +61,7 @@ export default function HomeScreen() {
         {/* Active & Upcoming Trips Section */}
         <Text style={[styles.sectionTitle, { color: colors.text }]}>Active & Upcoming Trips</Text>
         <View style={[styles.emptyCard, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-          <Map size={48} color={colors.textMuted} />
+          <Feather name="map-pin" size={48} color={colors.textMuted} />
           <Text style={[styles.emptyTitle, { color: colors.text }]}>No active trips yet</Text>
           <Text style={[styles.emptySubtitle, { color: colors.textSecondary }]}>
             Start a new group journey to invite friends, add destinations, and split expenses!
@@ -77,7 +71,7 @@ export default function HomeScreen() {
             onPress={() => router.push('/(trips)/add-trip' as any)}
             activeOpacity={0.8}
           >
-            <Plus size={18} color="#FFFFFF" style={{ marginRight: 6 }} />
+            <Feather name="plus" size={18} color="#FFFFFF" style={{ marginRight: 6 }} />
             <Text style={styles.primaryButtonText}>Create New Trip</Text>
           </TouchableOpacity>
         </View>

@@ -14,14 +14,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useAuth } from '@/context/AuthContext';
-import ChevronLeft from 'lucide-react-native/dist/esm/icons/chevron-left';
-import Mail from 'lucide-react-native/dist/esm/icons/mail';
-import Lock from 'lucide-react-native/dist/esm/icons/lock';
-import User from 'lucide-react-native/dist/esm/icons/user';
-import Eye from 'lucide-react-native/dist/esm/icons/eye';
-import EyeOff from 'lucide-react-native/dist/esm/icons/eye-off';
-import CheckSquare from 'lucide-react-native/dist/esm/icons/check-square';
-import Square from 'lucide-react-native/dist/esm/icons/square';
+import Feather from '@expo/vector-icons/Feather';
 
 export default function AuthScreen() {
   const router = useRouter();
@@ -94,7 +87,7 @@ export default function AuthScreen() {
           {/* Top Navigation - Chevron Back Button Only */}
           <View style={styles.topNav}>
             <TouchableOpacity onPress={() => router.back()} style={styles.backButton} activeOpacity={0.7}>
-              <ChevronLeft size={24} color="#0D253F" />
+              <Feather name="chevron-left" size={24} color="#0D253F" />
             </TouchableOpacity>
           </View>
 
@@ -141,7 +134,7 @@ export default function AuthScreen() {
               <View style={styles.formGroup}>
                 <Text style={styles.inputLabel}>Full Name</Text>
                 <View style={styles.inputWrapper}>
-                  <User size={20} color="#00A896" style={styles.inputIcon} />
+                  <Feather name="user" size={20} color="#00A896" style={styles.inputIcon} />
                   <TextInput
                     style={styles.input}
                     placeholder="e.g. Thiru Arasu"
@@ -156,7 +149,7 @@ export default function AuthScreen() {
             <View style={styles.formGroup}>
               <Text style={styles.inputLabel}>Email Address</Text>
               <View style={styles.inputWrapper}>
-                <Mail size={20} color="#00A896" style={styles.inputIcon} />
+                <Feather name="mail" size={20} color="#00A896" style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
                   placeholder="name@example.com"
@@ -172,7 +165,7 @@ export default function AuthScreen() {
             <View style={styles.formGroup}>
               <Text style={styles.inputLabel}>Password</Text>
               <View style={styles.inputWrapper}>
-                <Lock size={20} color="#00A896" style={styles.inputIcon} />
+                <Feather name="lock" size={20} color="#00A896" style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
                   placeholder={activeTab === 'login' ? 'Enter password' : 'At least 6 characters'}
@@ -182,7 +175,7 @@ export default function AuthScreen() {
                   secureTextEntry={!showPassword}
                 />
                 <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeIcon}>
-                  {showPassword ? <EyeOff size={20} color="#64748B" /> : <Eye size={20} color="#64748B" />}
+                  {showPassword ? <Feather name="eye-off" size={20} color="#64748B" /> : <Feather name="eye" size={20} color="#64748B" />}
                 </TouchableOpacity>
               </View>
             </View>
@@ -201,9 +194,9 @@ export default function AuthScreen() {
                 activeOpacity={0.8}
               >
                 {agreeTerms ? (
-                  <CheckSquare size={20} color="#00A896" style={{ marginRight: 10 }} />
+                  <Feather name="check-square" size={20} color="#00A896" style={{ marginRight: 10 }} />
                 ) : (
-                  <Square size={20} color="#94A3B8" style={{ marginRight: 10 }} />
+                  <Feather name="square" size={20} color="#94A3B8" style={{ marginRight: 10 }} />
                 )}
                 <Text style={styles.termsText}>
                   I agree to the <Text style={styles.linkText}>Terms of Service</Text> and{' '}

@@ -2,11 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SAFNORA_BRAND } from '@/constants/theme';
-import Moon from 'lucide-react-native/dist/esm/icons/moon';
-import Navigation from 'lucide-react-native/dist/esm/icons/navigation';
-import Users from 'lucide-react-native/dist/esm/icons/users';
-import Banknote from 'lucide-react-native/dist/esm/icons/banknote';
-import ChevronRight from 'lucide-react-native/dist/esm/icons/chevron-right';
+import Feather from '@expo/vector-icons/Feather';
 
 const { width } = Dimensions.get('window');
 
@@ -20,7 +16,7 @@ export default function GetStartedScreen() {
         {/* Crescent Moon & Stars Header */}
         <View style={styles.skyHeader}>
           <View style={styles.moonContainer}>
-            <Moon size={24} color="#FFF5C0" />
+            <Feather name="moon" size={24} color="#FFF5C0" />
           </View>
         </View>
 
@@ -51,18 +47,18 @@ export default function GetStartedScreen() {
             Connect people, places, plans, expenses, and memories into one complete digital journey.
           </Text>
 
-          {/* Core Feature Badges using Lucide Icons */}
+          {/* Core Feature Badges using Vector Icons */}
           <View style={styles.featuresRow}>
             <View style={styles.featurePill}>
-              <Navigation size={18} color="#00A896" />
+              <Feather name="navigation" size={18} color="#00A896" />
               <Text style={styles.featureText}>Plan Trips</Text>
             </View>
             <View style={styles.featurePill}>
-              <Users size={18} color="#00A896" />
+              <Feather name="users" size={18} color="#00A896" />
               <Text style={styles.featureText}>Collaborate</Text>
             </View>
             <View style={styles.featurePill}>
-              <Banknote size={18} color="#00A896" />
+              <Feather name="dollar-sign" size={18} color="#00A896" />
               <Text style={styles.featureText}>Split Expenses</Text>
             </View>
           </View>
@@ -74,7 +70,7 @@ export default function GetStartedScreen() {
             activeOpacity={0.85}
           >
             <Text style={styles.buttonText}>GET STARTED</Text>
-            <ChevronRight size={20} color="#FFFFFF" style={{ marginLeft: 6 }} />
+            <Feather name="chevron-right" size={20} color="#FFFFFF" style={{ marginLeft: 6 }} />
           </TouchableOpacity>
 
           <TouchableOpacity
