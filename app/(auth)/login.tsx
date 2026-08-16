@@ -10,71 +10,72 @@ import {
   KeyboardAvoidingView,
   Platform,
   Animated,
+  Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useAuth } from '@/context/AuthContext';
 import Feather from '@expo/vector-icons/Feather';
 
+const { width } = Dimensions.get('window');
+const FORM_WIDTH = width - 48; // Padding 24 on each side
+
 export default function AuthScreen() {
   const router = useRouter();
   const { signIn } = useAuth();
 
-  // Keep 'login' as the initial content as requested by user
+  // Keep 'login' as initial active tab as requested by user
   const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
 
-  // Form Fields
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  // Form State
+  const [loginEmail, setLoginEmail] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [signUpName, setSignUpName] = useState('');
+  const [signUpEmail, setSignUpEmail] = useState('');
+  const [signUpPassword, setSignUpPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(true);
   const [errorMsg, setErrorMsg] = useState('');
 
-  // Smooth Transition Animation
-  const fadeAnim = useRef(new Animated.Value(1)).current;
+  // Smooth Horizontal Slide Animation (Left to Right)
   const slideAnim = useRef(new Animated.Value(0)).current;
 
   const handleTabSwitch = (tab: 'login' | 'signup') => {
     if (tab === activeTab) return;
+    setActiveTab(tab);
     setErrorMsg('');
 
-    // Smooth transition out -> switch tab -> transition in
-    Animated.parallel([
-      Animated.timing(fadeAnim, { toValue: 0, duration: 150, useNativeDriver: true }),
-      Animated.timing(slideAnim, { toValue: tab === 'signup' ? 20 : -20, duration: 150, useNativeDriver: true }),
-    ]).start(() => {
-      setActiveTab(tab);
-      slideAnim.setValue(tab === 'signup' ? -20 : 20);
-      Animated.parallel([
-        Animated.timing(fadeAnim, { toValue: 1, duration: 200, useNativeDriver: true }),
-        Animated.timing(slideAnim, { toValue: 0, duration: 200, useNativeDriver: true }),
-      ]).start();
-    });
+    // Smooth Left-to-Right Horizontal Slide Effect
+    Animated.spring(slideAnim, {
+      toValue: tab === 'signup' ? -FORM_WIDTH : 0,
+      tension: 48,
+      friction: 9,
+      useNativeDriver: true,
+    }).start();
   };
 
-  const handleSubmit = async () => {
-    if (activeTab === 'login') {
-      if (!email || !password) {
-        setErrorMsg('Please enter both email and password.');
-        return;
-      }
-      setErrorMsg('');
-      await signIn(email);
-      router.replace('/(tabs)');
-    } else {
-      if (!fullName || !email || !password) {
-        setErrorMsg('Please fill in all required fields.');
-        return;
-      }
-      if (!agreeTerms) {
-        setErrorMsg('Please accept the terms to continue.');
-        return;
-      }
-      setErrorMsg('');
-      await signIn(email);
-      router.replace('/(tabs)');
+  const handleLoginSubmit = async () => {
+    if (!loginEmail || !loginPassword) {
+      setErrorMsg('Please enter both email and password.');
+      return;
     }
+    setErrorMsg('');
+    await signIn(loginEmail);
+    router.replace('/(tabs)');
+  };
+
+  const handleSignUpSubmit = async () => {
+    if (!signUpName || !signUpEmail || !signUpPassword) {
+      setErrorMsg('Please fill in all required fields.');
+      return;
+    }
+    if (!agreeTerms) {
+      setErrorMsg('Please accept the terms to continue.');
+      return;
+    }
+    setErrorMsg('');
+    await signIn(signUpEmail);
+    router.replace('/(tabs)');
   };
 
   return (
@@ -108,17 +109,33 @@ export default function AuthScreen() {
             </Text>
           </View>
 
-          {/* Interactive Tab Switcher */}
+          {/* Interactive Horizontal Tab Switcher */}
           <View style={styles.tabSwitcher}>
+            {/* Animated Active Pill Indicator */}
+            <Animated.View
+              style={[
+                styles.activeIndicator,
+                {
+                  transform: [
+                    {
+                      translateX: slideAnim.interpolate({
+                        inputRange: [-FORM_WIDTH, 0],
+                        outputRange: [(FORM_WIDTH - 8) / 2, 0],
+                      }),
+                    },
+                  ],
+                },
+              ]}
+            />
             <TouchableOpacity
-              style={[styles.tabButton, activeTab === 'login' && styles.activeTab]}
+              style={styles.tabButton}
               onPress={() => handleTabSwitch('login')}
               activeOpacity={0.8}
             >
               <Text style={[styles.tabText, activeTab === 'login' && styles.activeTabText]}>Log In</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={[styles.tabButton, activeTab === 'signup' && styles.activeTab]}
+              style={styles.tabButton}
               onPress={() => handleTabSwitch('signup')}
               activeOpacity={0.8}
             >
@@ -128,90 +145,136 @@ export default function AuthScreen() {
 
           {errorMsg ? <Text style={styles.errorText}>{errorMsg}</Text> : null}
 
-          {/* Animated In-Place Transition Form Container */}
-          <Animated.View style={{ opacity: fadeAnim, transform: [{ translateY: slideAnim }] }}>
-            {activeTab === 'signup' && (
-              <View style={styles.formGroup}>
-                <Text style={styles.inputLabel}>Full Name</Text>
-                <View style={styles.inputWrapper}>
-                  <Feather name="user" size={20} color="#00A896" style={styles.inputIcon} />
-                  <TextInput
-                    style={styles.input}
-                    placeholder="e.g. Thiru Arasu"
-                    placeholderTextColor="#94A3B8"
-                    value={fullName}
-                    onChangeText={setFullName}
-                  />
+          {/* Side-by-Side Horizontal Sliding Container (Left to Right) */}
+          <View style={styles.slidingViewport}>
+            <Animated.View
+              style={[
+                styles.slidingTrack,
+                {
+                  transform: [{ translateX: slideAnim }],
+                },
+              ]}
+            >
+              {/* LOG IN FORM (Left Panel) */}
+              <View style={styles.formPanel}>
+                <View style={styles.formGroup}>
+                  <Text style={styles.inputLabel}>Email Address</Text>
+                  <View style={styles.inputWrapper}>
+                    <Feather name="mail" size={20} color="#00A896" style={styles.inputIcon} />
+                    <TextInput
+                      style={styles.input}
+                      placeholder="name@example.com"
+                      placeholderTextColor="#94A3B8"
+                      value={loginEmail}
+                      onChangeText={setLoginEmail}
+                      keyboardType="email-address"
+                      autoCapitalize="none"
+                    />
+                  </View>
                 </View>
-              </View>
-            )}
 
-            <View style={styles.formGroup}>
-              <Text style={styles.inputLabel}>Email Address</Text>
-              <View style={styles.inputWrapper}>
-                <Feather name="mail" size={20} color="#00A896" style={styles.inputIcon} />
-                <TextInput
-                  style={styles.input}
-                  placeholder="name@example.com"
-                  placeholderTextColor="#94A3B8"
-                  value={email}
-                  onChangeText={setEmail}
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                />
-              </View>
-            </View>
+                <View style={styles.formGroup}>
+                  <Text style={styles.inputLabel}>Password</Text>
+                  <View style={styles.inputWrapper}>
+                    <Feather name="lock" size={20} color="#00A896" style={styles.inputIcon} />
+                    <TextInput
+                      style={styles.input}
+                      placeholder="Enter password"
+                      placeholderTextColor="#94A3B8"
+                      value={loginPassword}
+                      onChangeText={setLoginPassword}
+                      secureTextEntry={!showPassword}
+                    />
+                    <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeIcon}>
+                      {showPassword ? <Feather name="eye-off" size={20} color="#64748B" /> : <Feather name="eye" size={20} color="#64748B" />}
+                    </TouchableOpacity>
+                  </View>
+                </View>
 
-            <View style={styles.formGroup}>
-              <Text style={styles.inputLabel}>Password</Text>
-              <View style={styles.inputWrapper}>
-                <Feather name="lock" size={20} color="#00A896" style={styles.inputIcon} />
-                <TextInput
-                  style={styles.input}
-                  placeholder={activeTab === 'login' ? 'Enter password' : 'At least 6 characters'}
-                  placeholderTextColor="#94A3B8"
-                  value={password}
-                  onChangeText={setPassword}
-                  secureTextEntry={!showPassword}
-                />
-                <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeIcon}>
-                  {showPassword ? <Feather name="eye-off" size={20} color="#64748B" /> : <Feather name="eye" size={20} color="#64748B" />}
+                <TouchableOpacity
+                  style={styles.forgotPassword}
+                  onPress={() => router.push('/(auth)/forgot-password')}
+                >
+                  <Text style={styles.forgotText}>Forgot password?</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.primaryButton} onPress={handleLoginSubmit} activeOpacity={0.85}>
+                  <Text style={styles.primaryButtonText}>LOG IN</Text>
                 </TouchableOpacity>
               </View>
-            </View>
 
-            {activeTab === 'login' ? (
-              <TouchableOpacity
-                style={styles.forgotPassword}
-                onPress={() => router.push('/(auth)/forgot-password')}
-              >
-                <Text style={styles.forgotText}>Forgot password?</Text>
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                style={styles.termsRow}
-                onPress={() => setAgreeTerms(!agreeTerms)}
-                activeOpacity={0.8}
-              >
-                {agreeTerms ? (
-                  <Feather name="check-square" size={20} color="#00A896" style={{ marginRight: 10 }} />
-                ) : (
-                  <Feather name="square" size={20} color="#94A3B8" style={{ marginRight: 10 }} />
-                )}
-                <Text style={styles.termsText}>
-                  I agree to the <Text style={styles.linkText}>Terms of Service</Text> and{' '}
-                  <Text style={styles.linkText}>Privacy Policy</Text>.
-                </Text>
-              </TouchableOpacity>
-            )}
+              {/* SIGN UP FORM (Right Panel) */}
+              <View style={styles.formPanel}>
+                <View style={styles.formGroup}>
+                  <Text style={styles.inputLabel}>Full Name</Text>
+                  <View style={styles.inputWrapper}>
+                    <Feather name="user" size={20} color="#00A896" style={styles.inputIcon} />
+                    <TextInput
+                      style={styles.input}
+                      placeholder="e.g. Thiru Arasu"
+                      placeholderTextColor="#94A3B8"
+                      value={signUpName}
+                      onChangeText={setSignUpName}
+                    />
+                  </View>
+                </View>
 
-            {/* Primary Action Button */}
-            <TouchableOpacity style={styles.primaryButton} onPress={handleSubmit} activeOpacity={0.85}>
-              <Text style={styles.primaryButtonText}>
-                {activeTab === 'login' ? 'LOG IN' : 'CREATE ACCOUNT'}
-              </Text>
-            </TouchableOpacity>
-          </Animated.View>
+                <View style={styles.formGroup}>
+                  <Text style={styles.inputLabel}>Email Address</Text>
+                  <View style={styles.inputWrapper}>
+                    <Feather name="mail" size={20} color="#00A896" style={styles.inputIcon} />
+                    <TextInput
+                      style={styles.input}
+                      placeholder="name@example.com"
+                      placeholderTextColor="#94A3B8"
+                      value={signUpEmail}
+                      onChangeText={setSignUpEmail}
+                      keyboardType="email-address"
+                      autoCapitalize="none"
+                    />
+                  </View>
+                </View>
+
+                <View style={styles.formGroup}>
+                  <Text style={styles.inputLabel}>Password</Text>
+                  <View style={styles.inputWrapper}>
+                    <Feather name="lock" size={20} color="#00A896" style={styles.inputIcon} />
+                    <TextInput
+                      style={styles.input}
+                      placeholder="At least 6 characters"
+                      placeholderTextColor="#94A3B8"
+                      value={signUpPassword}
+                      onChangeText={setSignUpPassword}
+                      secureTextEntry={!showPassword}
+                    />
+                    <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeIcon}>
+                      {showPassword ? <Feather name="eye-off" size={20} color="#64748B" /> : <Feather name="eye" size={20} color="#64748B" />}
+                    </TouchableOpacity>
+                  </View>
+                </View>
+
+                <TouchableOpacity
+                  style={styles.termsRow}
+                  onPress={() => setAgreeTerms(!agreeTerms)}
+                  activeOpacity={0.8}
+                >
+                  {agreeTerms ? (
+                    <Feather name="check-square" size={20} color="#00A896" style={{ marginRight: 10 }} />
+                  ) : (
+                    <Feather name="square" size={20} color="#94A3B8" style={{ marginRight: 10 }} />
+                  )}
+                  <Text style={styles.termsText}>
+                    I agree to the <Text style={styles.linkText}>Terms of Service</Text> and{' '}
+                    <Text style={styles.linkText}>Privacy Policy</Text>.
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.primaryButton} onPress={handleSignUpSubmit} activeOpacity={0.85}>
+                  <Text style={styles.primaryButtonText}>CREATE ACCOUNT</Text>
+                </TouchableOpacity>
+              </View>
+            </Animated.View>
+          </View>
 
           {/* Divider */}
           <View style={styles.dividerRow}>
@@ -290,20 +353,27 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     padding: 4,
     marginBottom: 24,
+    position: 'relative',
   },
-  tabButton: {
-    flex: 1,
-    paddingVertical: 10,
-    alignItems: 'center',
-    borderRadius: 20,
-  },
-  activeTab: {
+  activeIndicator: {
+    position: 'absolute',
+    top: 4,
+    bottom: 4,
+    left: 4,
+    width: (FORM_WIDTH - 8) / 2,
     backgroundColor: '#FFFFFF',
+    borderRadius: 20,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
+  },
+  tabButton: {
+    flex: 1,
+    paddingVertical: 10,
+    alignItems: 'center',
+    zIndex: 1,
   },
   tabText: {
     fontSize: 14,
@@ -320,6 +390,17 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     textAlign: 'center',
     fontWeight: '600',
+  },
+  slidingViewport: {
+    width: FORM_WIDTH,
+    overflow: 'hidden',
+  },
+  slidingTrack: {
+    flexDirection: 'row',
+    width: FORM_WIDTH * 2,
+  },
+  formPanel: {
+    width: FORM_WIDTH,
   },
   formGroup: {
     marginBottom: 16,

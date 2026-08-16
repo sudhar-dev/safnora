@@ -11,12 +11,12 @@ export default function GetStartedScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Top Graphic Header Area with Maximized Logo */}
+      {/* Top Graphic Header Area */}
       <View style={styles.headerGraphic}>
-        {/* Crescent Moon & Stars Header */}
+        {/* Crescent Moon Header */}
         <View style={styles.skyHeader}>
           <View style={styles.moonContainer}>
-            <Feather name="moon" size={24} color="#FFF5C0" />
+            <Feather name="moon" size={22} color="#FFF5C0" />
           </View>
         </View>
 
@@ -37,52 +37,54 @@ export default function GetStartedScreen() {
         </View>
       </View>
 
-      {/* Main Content Card */}
-      <View style={styles.contentCard}>
-        <ScrollView contentContainerStyle={styles.scrollInner} showsVerticalScrollIndicator={false}>
-          <Text style={styles.greetingTitle}>Welcome to SAFNORA!</Text>
-          <Text style={styles.brandTagline}>{SAFNORA_BRAND.tagline}</Text>
+      {/* Main Content Card Container with Clean Background */}
+      <View style={styles.contentCardWrapper}>
+        <View style={styles.contentCard}>
+          <ScrollView contentContainerStyle={styles.scrollInner} showsVerticalScrollIndicator={false}>
+            <Text style={styles.greetingTitle}>Welcome to SAFNORA!</Text>
+            <Text style={styles.brandTagline}>{SAFNORA_BRAND.tagline}</Text>
 
-          <Text style={styles.description}>
-            Connect people, places, plans, expenses, and memories into one complete digital journey.
-          </Text>
-
-          {/* Core Feature Badges using Vector Icons */}
-          <View style={styles.featuresRow}>
-            <View style={styles.featurePill}>
-              <Feather name="navigation" size={18} color="#00A896" />
-              <Text style={styles.featureText}>Plan Trips</Text>
-            </View>
-            <View style={styles.featurePill}>
-              <Feather name="users" size={18} color="#00A896" />
-              <Text style={styles.featureText}>Collaborate</Text>
-            </View>
-            <View style={styles.featurePill}>
-              <Feather name="dollar-sign" size={18} color="#00A896" />
-              <Text style={styles.featureText}>Split Expenses</Text>
-            </View>
-          </View>
-
-          {/* Primary GET STARTED Button */}
-          <TouchableOpacity
-            style={styles.getStartedButton}
-            onPress={() => router.push('/(auth)/login')}
-            activeOpacity={0.85}
-          >
-            <Text style={styles.buttonText}>GET STARTED</Text>
-            <Feather name="chevron-right" size={20} color="#FFFFFF" style={{ marginLeft: 6 }} />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.loginLinkButton}
-            onPress={() => router.push('/(auth)/login')}
-            activeOpacity={0.7}
-          >
-            <Text style={styles.loginLinkText}>
-              Already have an account? <Text style={styles.loginBold}>Log In</Text>
+            <Text style={styles.description}>
+              Connect people, places, plans, expenses, and memories into one complete digital journey.
             </Text>
-          </TouchableOpacity>
-        </ScrollView>
+
+            {/* Core Feature Badges */}
+            <View style={styles.featuresRow}>
+              <View style={styles.featurePill}>
+                <Feather name="navigation" size={18} color="#00A896" />
+                <Text style={styles.featureText}>Plan Trips</Text>
+              </View>
+              <View style={styles.featurePill}>
+                <Feather name="users" size={18} color="#00A896" />
+                <Text style={styles.featureText}>Collaborate</Text>
+              </View>
+              <View style={styles.featurePill}>
+                <Feather name="dollar-sign" size={18} color="#00A896" />
+                <Text style={styles.featureText}>Split Expenses</Text>
+              </View>
+            </View>
+
+            {/* Primary GET STARTED Button */}
+            <TouchableOpacity
+              style={styles.getStartedButton}
+              onPress={() => router.push('/(auth)/login')}
+              activeOpacity={0.85}
+            >
+              <Text style={styles.buttonText}>GET STARTED</Text>
+              <Feather name="chevron-right" size={20} color="#FFFFFF" style={{ marginLeft: 6 }} />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.loginLinkButton}
+              onPress={() => router.push('/(auth)/login')}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.loginLinkText}>
+                Already have an account? <Text style={styles.loginBold}>Log In</Text>
+              </Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </View>
       </View>
     </View>
   );
@@ -91,10 +93,10 @@ export default function GetStartedScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0D253F',
+    backgroundColor: '#00A896',
   },
   headerGraphic: {
-    height: '52%',
+    height: '50%',
     backgroundColor: '#00A896',
     justifyContent: 'space-between',
     position: 'relative',
@@ -132,7 +134,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    height: 80,
+    height: 70,
   },
   leftPeak: {
     width: 0,
@@ -140,7 +142,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderLeftWidth: width * 0.35,
     borderRightWidth: width * 0.35,
-    borderBottomWidth: 70,
+    borderBottomWidth: 60,
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
     borderBottomColor: '#FFFFFF',
@@ -154,7 +156,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderLeftWidth: width * 0.5,
     borderRightWidth: width * 0.5,
-    borderBottomWidth: 90,
+    borderBottomWidth: 80,
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
     borderBottomColor: '#FFFFFF',
@@ -168,7 +170,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderLeftWidth: width * 0.4,
     borderRightWidth: width * 0.4,
-    borderBottomWidth: 60,
+    borderBottomWidth: 50,
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
     borderBottomColor: '#FFFFFF',
@@ -176,14 +178,15 @@ const styles = StyleSheet.create({
     right: -30,
     bottom: 0,
   },
+  contentCardWrapper: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+  },
   contentCard: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-    borderTopLeftRadius: 32,
-    borderTopRightRadius: 32,
-    marginTop: -16,
     paddingHorizontal: 28,
-    paddingTop: 28,
+    paddingTop: 24,
   },
   scrollInner: {
     alignItems: 'center',
