@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAppTheme } from '@/context/ThemeContext';
 import { useRouter } from 'expo-router';
-import { IconSymbol } from '@/components/ui/icon-symbol';
+import ChevronLeft from 'lucide-react-native/dist/esm/icons/chevron-left';
 
 export default function AddTripScreen() {
   const { colors } = useAppTheme();
@@ -17,7 +17,7 @@ export default function AddTripScreen() {
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={[styles.header, { borderBottomColor: colors.border }]}>
         <TouchableOpacity onPress={() => router.back()}>
-          <IconSymbol size={24} name="chevron.left" color={colors.text} />
+          <ChevronLeft size={24} color={colors.text} />
         </TouchableOpacity>
         <Text style={[styles.headerTitle, { color: colors.text }]}>Create New Trip</Text>
         <View style={{ width: 24 }} />

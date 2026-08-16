@@ -3,7 +3,12 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'rea
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAppTheme } from '@/context/ThemeContext';
 import { SAFNORA_BRAND } from '@/constants/theme';
-import { IconSymbol } from '@/components/ui/icon-symbol';
+import PlusCircle from 'lucide-react-native/dist/esm/icons/plus-circle';
+import Navigation from 'lucide-react-native/dist/esm/icons/navigation';
+import ImageIcon from 'lucide-react-native/dist/esm/icons/image';
+import Banknote from 'lucide-react-native/dist/esm/icons/banknote';
+import Map from 'lucide-react-native/dist/esm/icons/map';
+import Plus from 'lucide-react-native/dist/esm/icons/plus';
 import { useRouter } from 'expo-router';
 
 export default function HomeScreen() {
@@ -11,21 +16,20 @@ export default function HomeScreen() {
   const router = useRouter();
 
   const quickActions = [
-    { title: 'Create Trip', icon: 'plus.circle.fill', route: '/(trips)/add-trip', color: '#0284C7' },
-    { title: 'Explore Places', icon: 'paperplane.fill', route: '/(tabs)/explore', color: '#6366F1' },
-    { title: 'Trip Memories', icon: 'photo.fill', route: '/(tabs)/explore', color: '#10B981' },
-    { title: 'Expenses', icon: 'banknote.fill', route: '/(trips)/calculator', color: '#F59E0B' },
+    { title: 'Create Trip', icon: PlusCircle, route: '/(trips)/add-trip', color: '#00A896' },
+    { title: 'Explore Places', icon: Navigation, route: '/(tabs)/explore', color: '#6366F1' },
+    { title: 'Trip Memories', icon: ImageIcon, route: '/(tabs)/explore', color: '#10B981' },
+    { title: 'Expenses', icon: Banknote, route: '/(trips)/calculator', color: '#F59E0B' },
   ];
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        
         {/* Hero Branding Header */}
         <View style={[styles.heroCard, { backgroundColor: colors.surface, borderColor: colors.border }]}>
           <View style={styles.heroHeader}>
             <Image
-              source={require('@/assets/images/splash-icon.png')}
+              source={require('@/assets/images/logo/LogoPng.png')}
               style={styles.logoImage}
               resizeMode="contain"
             />
@@ -42,25 +46,28 @@ export default function HomeScreen() {
         {/* Quick Actions Grid */}
         <Text style={[styles.sectionTitle, { color: colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          {quickActions.map((action, idx) => (
-            <TouchableOpacity
-              key={idx}
-              style={[styles.actionCard, { backgroundColor: colors.surface, borderColor: colors.border }]}
-              onPress={() => router.push(action.route as any)}
-              activeOpacity={0.7}
-            >
-              <View style={[styles.iconWrapper, { backgroundColor: action.color + '20' }]}>
-                <IconSymbol size={24} name={action.icon as any} color={action.color} />
-              </View>
-              <Text style={[styles.actionTitle, { color: colors.text }]}>{action.title}</Text>
-            </TouchableOpacity>
-          ))}
+          {quickActions.map((action, idx) => {
+            const IconComp = action.icon;
+            return (
+              <TouchableOpacity
+                key={idx}
+                style={[styles.actionCard, { backgroundColor: colors.surface, borderColor: colors.border }]}
+                onPress={() => router.push(action.route as any)}
+                activeOpacity={0.7}
+              >
+                <View style={[styles.iconWrapper, { backgroundColor: action.color + '20' }]}>
+                  <IconComp size={24} color={action.color} />
+                </View>
+                <Text style={[styles.actionTitle, { color: colors.text }]}>{action.title}</Text>
+              </TouchableOpacity>
+            );
+          })}
         </View>
 
-        {/* Upcoming Trips Section */}
+        {/* Active & Upcoming Trips Section */}
         <Text style={[styles.sectionTitle, { color: colors.text }]}>Active & Upcoming Trips</Text>
         <View style={[styles.emptyCard, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-          <IconSymbol size={48} name="map.fill" color={colors.textMuted} />
+          <Map size={48} color={colors.textMuted} />
           <Text style={[styles.emptyTitle, { color: colors.text }]}>No active trips yet</Text>
           <Text style={[styles.emptySubtitle, { color: colors.textSecondary }]}>
             Start a new group journey to invite friends, add destinations, and split expenses!
@@ -70,10 +77,10 @@ export default function HomeScreen() {
             onPress={() => router.push('/(trips)/add-trip' as any)}
             activeOpacity={0.8}
           >
-            <Text style={styles.primaryButtonText}>+ Create New Trip</Text>
+            <Plus size={18} color="#FFFFFF" style={{ marginRight: 6 }} />
+            <Text style={styles.primaryButtonText}>Create New Trip</Text>
           </TouchableOpacity>
         </View>
-
       </ScrollView>
     </SafeAreaView>
   );
@@ -154,7 +161,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 1,
     alignItems: 'center',
-    textAlign: 'center',
   },
   emptyTitle: {
     fontSize: 16,
@@ -169,6 +175,8 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   primaryButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 12,

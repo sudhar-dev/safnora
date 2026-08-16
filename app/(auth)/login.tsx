@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -9,30 +9,79 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  Animated,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useAuth } from '@/context/AuthContext';
-import { SAFNORA_BRAND } from '@/constants/theme';
-import { IconSymbol } from '@/components/ui/icon-symbol';
+import ChevronLeft from 'lucide-react-native/dist/esm/icons/chevron-left';
+import Mail from 'lucide-react-native/dist/esm/icons/mail';
+import Lock from 'lucide-react-native/dist/esm/icons/lock';
+import User from 'lucide-react-native/dist/esm/icons/user';
+import Eye from 'lucide-react-native/dist/esm/icons/eye';
+import EyeOff from 'lucide-react-native/dist/esm/icons/eye-off';
+import CheckSquare from 'lucide-react-native/dist/esm/icons/check-square';
+import Square from 'lucide-react-native/dist/esm/icons/square';
 
-export default function LoginScreen() {
+export default function AuthScreen() {
   const router = useRouter();
   const { signIn } = useAuth();
 
+  // Keep 'login' as the initial content as requested by user
+  const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
+
+  // Form Fields
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [agreeTerms, setAgreeTerms] = useState(true);
   const [errorMsg, setErrorMsg] = useState('');
 
-  const handleLogin = async () => {
-    if (!email || !password) {
-      setErrorMsg('Please enter both email and password.');
-      return;
-    }
+  // Smooth Transition Animation
+  const fadeAnim = useRef(new Animated.Value(1)).current;
+  const slideAnim = useRef(new Animated.Value(0)).current;
+
+  const handleTabSwitch = (tab: 'login' | 'signup') => {
+    if (tab === activeTab) return;
     setErrorMsg('');
-    await signIn(email);
-    router.replace('/(tabs)');
+
+    // Smooth transition out -> switch tab -> transition in
+    Animated.parallel([
+      Animated.timing(fadeAnim, { toValue: 0, duration: 150, useNativeDriver: true }),
+      Animated.timing(slideAnim, { toValue: tab === 'signup' ? 20 : -20, duration: 150, useNativeDriver: true }),
+    ]).start(() => {
+      setActiveTab(tab);
+      slideAnim.setValue(tab === 'signup' ? -20 : 20);
+      Animated.parallel([
+        Animated.timing(fadeAnim, { toValue: 1, duration: 200, useNativeDriver: true }),
+        Animated.timing(slideAnim, { toValue: 0, duration: 200, useNativeDriver: true }),
+      ]).start();
+    });
+  };
+
+  const handleSubmit = async () => {
+    if (activeTab === 'login') {
+      if (!email || !password) {
+        setErrorMsg('Please enter both email and password.');
+        return;
+      }
+      setErrorMsg('');
+      await signIn(email);
+      router.replace('/(tabs)');
+    } else {
+      if (!fullName || !email || !password) {
+        setErrorMsg('Please fill in all required fields.');
+        return;
+      }
+      if (!agreeTerms) {
+        setErrorMsg('Please accept the terms to continue.');
+        return;
+      }
+      setErrorMsg('');
+      await signIn(email);
+      router.replace('/(tabs)');
+    }
   };
 
   return (
@@ -42,10 +91,10 @@ export default function LoginScreen() {
         style={{ flex: 1 }}
       >
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-          {/* Header Back & Logo */}
+          {/* Top Navigation - Chevron Back Button Only */}
           <View style={styles.topNav}>
-            <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-              <IconSymbol size={22} name="chevron.left" color="#0D253F" />
+            <TouchableOpacity onPress={() => router.back()} style={styles.backButton} activeOpacity={0.7}>
+              <ChevronLeft size={24} color="#0D253F" />
             </TouchableOpacity>
           </View>
 
@@ -56,71 +105,120 @@ export default function LoginScreen() {
               style={styles.logoImage}
               resizeMode="contain"
             />
-            <Text style={styles.title}>Welcome Back!</Text>
-            <Text style={styles.subtitle}>Sign in to access your trip dashboard & group itineraries</Text>
+            <Text style={styles.title}>
+              {activeTab === 'login' ? 'Welcome Back!' : 'Create Account'}
+            </Text>
+            <Text style={styles.subtitle}>
+              {activeTab === 'login'
+                ? 'Sign in to access your trip dashboard & group itineraries'
+                : 'Join SAFNORA to start planning collaborative group trips!'}
+            </Text>
           </View>
 
-          {/* Tab Switcher */}
+          {/* Interactive Tab Switcher */}
           <View style={styles.tabSwitcher}>
-            <TouchableOpacity style={[styles.tabButton, styles.activeTab]}>
-              <Text style={[styles.tabText, styles.activeTabText]}>Log In</Text>
+            <TouchableOpacity
+              style={[styles.tabButton, activeTab === 'login' && styles.activeTab]}
+              onPress={() => handleTabSwitch('login')}
+              activeOpacity={0.8}
+            >
+              <Text style={[styles.tabText, activeTab === 'login' && styles.activeTabText]}>Log In</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={styles.tabButton}
-              onPress={() => router.push('/(auth)/signup')}
+              style={[styles.tabButton, activeTab === 'signup' && styles.activeTab]}
+              onPress={() => handleTabSwitch('signup')}
+              activeOpacity={0.8}
             >
-              <Text style={styles.tabText}>Sign Up</Text>
+              <Text style={[styles.tabText, activeTab === 'signup' && styles.activeTabText]}>Sign Up</Text>
             </TouchableOpacity>
           </View>
 
           {errorMsg ? <Text style={styles.errorText}>{errorMsg}</Text> : null}
 
-          {/* Input Fields */}
-          <View style={styles.formGroup}>
-            <Text style={styles.inputLabel}>Email Address</Text>
-            <View style={styles.inputWrapper}>
-              <IconSymbol size={20} name="envelope.fill" color="#00A896" style={styles.inputIcon} />
-              <TextInput
-                style={styles.input}
-                placeholder="name@example.com"
-                placeholderTextColor="#94A3B8"
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-                autoCapitalize="none"
-              />
-            </View>
-          </View>
+          {/* Animated In-Place Transition Form Container */}
+          <Animated.View style={{ opacity: fadeAnim, transform: [{ translateY: slideAnim }] }}>
+            {activeTab === 'signup' && (
+              <View style={styles.formGroup}>
+                <Text style={styles.inputLabel}>Full Name</Text>
+                <View style={styles.inputWrapper}>
+                  <User size={20} color="#00A896" style={styles.inputIcon} />
+                  <TextInput
+                    style={styles.input}
+                    placeholder="e.g. Thiru Arasu"
+                    placeholderTextColor="#94A3B8"
+                    value={fullName}
+                    onChangeText={setFullName}
+                  />
+                </View>
+              </View>
+            )}
 
-          <View style={styles.formGroup}>
-            <Text style={styles.inputLabel}>Password</Text>
-            <View style={styles.inputWrapper}>
-              <IconSymbol size={20} name="lock.fill" color="#00A896" style={styles.inputIcon} />
-              <TextInput
-                style={styles.input}
-                placeholder="Enter password"
-                placeholderTextColor="#94A3B8"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry={!showPassword}
-              />
-              <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeIcon}>
-                <IconSymbol size={20} name={showPassword ? 'eye.slash.fill' : 'eye.fill'} color="#64748B" />
+            <View style={styles.formGroup}>
+              <Text style={styles.inputLabel}>Email Address</Text>
+              <View style={styles.inputWrapper}>
+                <Mail size={20} color="#00A896" style={styles.inputIcon} />
+                <TextInput
+                  style={styles.input}
+                  placeholder="name@example.com"
+                  placeholderTextColor="#94A3B8"
+                  value={email}
+                  onChangeText={setEmail}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                />
+              </View>
+            </View>
+
+            <View style={styles.formGroup}>
+              <Text style={styles.inputLabel}>Password</Text>
+              <View style={styles.inputWrapper}>
+                <Lock size={20} color="#00A896" style={styles.inputIcon} />
+                <TextInput
+                  style={styles.input}
+                  placeholder={activeTab === 'login' ? 'Enter password' : 'At least 6 characters'}
+                  placeholderTextColor="#94A3B8"
+                  value={password}
+                  onChangeText={setPassword}
+                  secureTextEntry={!showPassword}
+                />
+                <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeIcon}>
+                  {showPassword ? <EyeOff size={20} color="#64748B" /> : <Eye size={20} color="#64748B" />}
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            {activeTab === 'login' ? (
+              <TouchableOpacity
+                style={styles.forgotPassword}
+                onPress={() => router.push('/(auth)/forgot-password')}
+              >
+                <Text style={styles.forgotText}>Forgot password?</Text>
               </TouchableOpacity>
-            </View>
-          </View>
+            ) : (
+              <TouchableOpacity
+                style={styles.termsRow}
+                onPress={() => setAgreeTerms(!agreeTerms)}
+                activeOpacity={0.8}
+              >
+                {agreeTerms ? (
+                  <CheckSquare size={20} color="#00A896" style={{ marginRight: 10 }} />
+                ) : (
+                  <Square size={20} color="#94A3B8" style={{ marginRight: 10 }} />
+                )}
+                <Text style={styles.termsText}>
+                  I agree to the <Text style={styles.linkText}>Terms of Service</Text> and{' '}
+                  <Text style={styles.linkText}>Privacy Policy</Text>.
+                </Text>
+              </TouchableOpacity>
+            )}
 
-          <TouchableOpacity
-            style={styles.forgotPassword}
-            onPress={() => router.push('/(auth)/forgot-password')}
-          >
-            <Text style={styles.forgotText}>Forgot password?</Text>
-          </TouchableOpacity>
-
-          {/* Login Button */}
-          <TouchableOpacity style={styles.primaryButton} onPress={handleLogin} activeOpacity={0.85}>
-            <Text style={styles.primaryButtonText}>LOG IN</Text>
-          </TouchableOpacity>
+            {/* Primary Action Button */}
+            <TouchableOpacity style={styles.primaryButton} onPress={handleSubmit} activeOpacity={0.85}>
+              <Text style={styles.primaryButtonText}>
+                {activeTab === 'login' ? 'LOG IN' : 'CREATE ACCOUNT'}
+              </Text>
+            </TouchableOpacity>
+          </Animated.View>
 
           {/* Divider */}
           <View style={styles.dividerRow}>
@@ -144,7 +242,6 @@ export default function LoginScreen() {
             />
             <Text style={styles.googleButtonText}>Continue with Google</Text>
           </TouchableOpacity>
-
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -174,12 +271,12 @@ const styles = StyleSheet.create({
   },
   brandContainer: {
     alignItems: 'center',
-    marginBottom: 24,
+    marginBottom: 20,
   },
   logoImage: {
     width: 80,
     height: 80,
-    marginBottom: 12,
+    marginBottom: 10,
   },
   title: {
     fontSize: 26,
@@ -264,12 +361,27 @@ const styles = StyleSheet.create({
   },
   forgotPassword: {
     alignSelf: 'flex-end',
-    marginBottom: 24,
+    marginBottom: 20,
   },
   forgotText: {
     color: '#00A896',
     fontSize: 13,
     fontWeight: '600',
+  },
+  termsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  termsText: {
+    fontSize: 13,
+    color: '#64748B',
+    flex: 1,
+    lineHeight: 18,
+  },
+  linkText: {
+    color: '#00A896',
+    fontWeight: '700',
   },
   primaryButton: {
     height: 52,
@@ -282,7 +394,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 4,
-    marginBottom: 24,
+    marginBottom: 20,
   },
   primaryButtonText: {
     color: '#FFFFFF',
@@ -293,7 +405,7 @@ const styles = StyleSheet.create({
   dividerRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 24,
+    marginBottom: 20,
   },
   dividerLine: {
     flex: 1,
