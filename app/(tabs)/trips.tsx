@@ -123,6 +123,7 @@ export default function TripsTabScreen() {
               key={trip.id}
               style={[styles.tripCard, { backgroundColor: colors.surface, borderColor: colors.border }]}
               activeOpacity={0.7}
+              onPress={() => router.push(`/(trips)/${trip.id}` as any)}
               onLongPress={() => handleLongPressTrip(trip)}
             >
               <View style={styles.cardHeader}>
