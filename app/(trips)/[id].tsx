@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -7,12 +7,11 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
-  Modal,
   Share,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAppTheme } from '@/context/ThemeContext';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter, useFocusEffect } from 'expo-router';
 import Feather from '@expo/vector-icons/Feather';
 import { getTripsFromStorage, saveTripToStorage, TripData } from '@/utils/storage';
 
@@ -54,53 +53,60 @@ export default function TripDetailsScreen() {
   const [pollsList, setPollsList] = useState([
     { id: '1', question: 'Dinner Choice for Night 2?', options: ['Kerala Seafood Feast (60%)', 'South Indian Thali (40%)'], totalVotes: 5 },
   ]);
-  const [newPollQuestion, setNewPollQuestion] = useState('');
-
-  // Add Member Modal
-  const [isMemberModalOpen, setIsMemberModalOpen] = useState(false);
-  const [newMemberEmail, setNewMemberEmail] = useState('');
-  const [membersList, setMembersList] = useState(['Thiru (You)', 'Arun Kumar', 'Kavya S.', 'Praveen R.', 'Ananya V.']);
 
   // Three Dots Menu Dropdown
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  useEffect(() => {
-    async function loadTripDetails() {
-      setIsLoading(true);
-      const allTrips = await getTripsFromStorage();
-      const current = allTrips.find((t) => t.id === id);
+  const loadTripDetails = useCallback(async () => {
+    setIsLoading(true);
+    const allTrips = await getTripsFromStorage();
+    const current = allTrips.find((t) => t.id === id);
 
-      if (current) {
-        setTrip(current);
-      } else {
-        // Fallback default trip details if accessed directly
-        setTrip({
-          id: id || 'demo-trip',
-          title: 'Valparai Gateway Adventure',
-          startingPoint: 'Chennai',
-          destination: 'Valparai, Kerala',
-          startDate: 'Aug 24, 2026',
-          endDate: 'Aug 28, 2026',
-          dates: 'Aug 24 - Aug 28, 2026',
-          description: 'Exploring tea estates, waterfalls, and scenic hill road driving.',
-          status: 'Active',
-          members: 5,
-          statusColor: '#10B981',
-        });
-      }
-      setIsLoading(false);
+    if (current) {
+      setTrip(current);
+    } else {
+      // Fallback default trip details if accessed directly
+      setTrip({
+        id: id || 'demo-trip',
+        title: 'Valparai Gateway Adventure',
+        startingPoint: 'Chennai',
+        destination: 'Valparai, Kerala',
+        startDate: 'Aug 24, 2026',
+        endDate: 'Aug 28, 2026',
+        dates: 'Aug 24 - Aug 28, 2026',
+        description: 'Exploring tea estates, waterfalls, and scenic hill road driving.',
+        status: 'Active',
+        members: 5,
+        statusColor: '#10B981',
+      });
     }
-
-    loadTripDetails();
+    setIsLoading(false);
   }, [id]);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadTripDetails();
+    }, [loadTripDetails])
+  );
 
   // Stage Switcher
   const stages: ('Planning' | 'Ready' | 'Active' | 'Completed')[] = ['Planning', 'Ready', 'Active', 'Completed'];
   const stageLabels = ['Plan', 'Ready', 'Active', 'Done'];
 
+  const stageColorMap: Record<string, string> = {
+    Planning: '#00A896',
+    Ready: '#6366F1',
+    Active: '#10B981',
+    Completed: '#64748B',
+  };
+
   const handleStageChange = async (newStatus: 'Planning' | 'Ready' | 'Active' | 'Completed') => {
     if (!trip) return;
-    const updated = { ...trip, status: newStatus };
+    const updated = {
+      ...trip,
+      status: newStatus,
+      statusColor: stageColorMap[newStatus] || '#00A896',
+    };
     setTrip(updated);
     await saveTripToStorage(updated);
   };
@@ -114,19 +120,13 @@ export default function TripDetailsScreen() {
     setNewPlaceName('');
   };
 
-  const handleAddMember = () => {
-    if (!newMemberEmail.trim()) return;
-    setMembersList([...membersList, newMemberEmail.trim()]);
-    if (trip) {
-      const updated = { ...trip, members: (trip.members || 1) + 1 };
-      setTrip(updated);
-      saveTripToStorage(updated);
-    }
-    setNewMemberEmail('');
-    setIsMemberModalOpen(false);
+  const handleOpenInviteMembers = () => {
+    setIsMenuOpen(false);
+    router.push(`/(trips)/invite-members?tripId=${trip?.id}` as any);
   };
 
   const handleShareTrip = async () => {
+    setIsMenuOpen(false);
     try {
       await Share.share({
         message: `Join our group trip "${trip?.title || 'Trip'}" on SAFNORA! Destination: ${trip?.destination}`,
@@ -148,6 +148,8 @@ export default function TripDetailsScreen() {
 
   const currentStageIndex = stages.indexOf(trip.status as any) !== -1 ? stages.indexOf(trip.status as any) : 0;
   const totalExpenseAmount = expensesList.reduce((sum, item) => sum + item.amount, 0);
+
+  const mockMembersList = ['Thiru (You)', 'Arun K.', 'Kavya S.', 'Praveen R.', 'Ananya V.'];
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
@@ -171,7 +173,7 @@ export default function TripDetailsScreen() {
             <Feather name="share-2" size={16} color="#00A896" style={{ marginRight: 10 }} />
             <Text style={[styles.menuItemText, { color: colors.text }]}>Share Trip Link</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} onPress={() => setIsMemberModalOpen(true)}>
+          <TouchableOpacity style={styles.menuItem} onPress={handleOpenInviteMembers}>
             <Feather name="user-plus" size={16} color="#6366F1" style={{ marginRight: 10 }} />
             <Text style={[styles.menuItemText, { color: colors.text }]}>Invite Members</Text>
           </TouchableOpacity>
@@ -220,22 +222,22 @@ export default function TripDetailsScreen() {
             {/* Member Avatars Stack */}
             <View style={styles.membersRow}>
               <View style={styles.avatarStack}>
-                {membersList.slice(0, 4).map((m, idx) => (
+                {mockMembersList.slice(0, Math.min(4, trip.members || 5)).map((m, idx) => (
                   <View key={idx} style={[styles.avatarCircle, { marginLeft: idx > 0 ? -10 : 0 }]}>
                     <Text style={styles.avatarText}>{m[0]}</Text>
                   </View>
                 ))}
               </View>
-              {membersList.length > 4 ? (
-                <Text style={styles.extraMembersText}>+{membersList.length - 4} more</Text>
+              {trip.members > 4 ? (
+                <Text style={styles.extraMembersText}>+{trip.members - 4} more</Text>
               ) : null}
               <TouchableOpacity
                 style={styles.addMemberBadge}
-                onPress={() => setIsMemberModalOpen(true)}
+                onPress={handleOpenInviteMembers}
                 activeOpacity={0.8}
               >
-                <Feather name="plus" size={14} color="#FFFFFF" style={{ marginRight: 2 }} />
-                <Text style={styles.addMemberBadgeText}>Add</Text>
+                <Feather name="user-plus" size={13} color="#FFFFFF" style={{ marginRight: 4 }} />
+                <Text style={styles.addMemberBadgeText}>Invite</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -243,7 +245,12 @@ export default function TripDetailsScreen() {
 
         {/* Trip Progress Bar (Plan ➔ Ready ➔ Active ➔ Done) */}
         <View style={[styles.progressCard, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-          <Text style={[styles.progressTitle, { color: colors.text }]}>Trip Progress</Text>
+          <View style={styles.progressHeaderRow}>
+            <Text style={[styles.progressTitle, { color: colors.text }]}>Trip Progress</Text>
+            <View style={[styles.statusBadgePill, { backgroundColor: (trip.statusColor || '#00A896') + '20' }]}>
+              <Text style={[styles.statusBadgeText, { color: trip.statusColor || '#00A896' }]}>{trip.status}</Text>
+            </View>
+          </View>
 
           <View style={styles.progressBarWrapper}>
             <View style={styles.progressTrackLine} />
@@ -302,7 +309,7 @@ export default function TripDetailsScreen() {
 
           <View style={[styles.summaryCard, { backgroundColor: colors.surface, borderColor: colors.border }]}>
             <View style={[styles.summaryIconWrapper, { backgroundColor: '#F59E0B15' }]}>
-              <Feather name="dollar-sign" size={20} color="#F59E0B" />
+              <Text style={styles.rupeeIconMetric}>₹</Text>
             </View>
 
             <View style={styles.summaryTextWrapper}>
@@ -354,7 +361,7 @@ export default function TripDetailsScreen() {
             activeOpacity={0.8}
           >
             <View style={[styles.actionIconWrapper, { backgroundColor: '#F59E0B15' }]}>
-              <Feather name="dollar-sign" size={20} color="#F59E0B" />
+              <Text style={styles.rupeeIconMetric}>₹</Text>
             </View>
             <Text style={styles.actionCardText}>Add Expense</Text>
           </TouchableOpacity>
@@ -460,7 +467,7 @@ export default function TripDetailsScreen() {
             {expensesList.map((exp) => (
               <View key={exp.id} style={[styles.placeRow, { borderBottomColor: colors.border }]}>
                 <View style={[styles.placeIconWrapper, { backgroundColor: '#F59E0B15' }]}>
-                  <Feather name="dollar-sign" size={16} color="#F59E0B" />
+                  <Text style={styles.rupeeBadgeSmall}>₹</Text>
                 </View>
 
                 <View style={styles.placeInfo}>
@@ -503,36 +510,6 @@ export default function TripDetailsScreen() {
           </View>
         )}
       </ScrollView>
-
-      {/* Add Member Modal */}
-      <Modal visible={isMemberModalOpen} transparent animationType="fade" onRequestClose={() => setIsMemberModalOpen(false)}>
-        <View style={styles.modalOverlay}>
-          <View style={[styles.memberModalCard, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-            <View style={styles.modalHeaderRow}>
-              <Text style={[styles.modalTitle, { color: colors.text }]}>Add Trip Member</Text>
-              <TouchableOpacity onPress={() => setIsMemberModalOpen(false)}>
-                <Feather name="x" size={20} color={colors.textMuted} />
-              </TouchableOpacity>
-            </View>
-
-            <Text style={[styles.modalSubtitle, { color: colors.textSecondary }]}>
-              Enter friend's email or phone number to invite them to this trip.
-            </Text>
-
-            <TextInput
-              style={[styles.inputModal, { backgroundColor: colors.surfaceSubtle, color: colors.text, borderColor: colors.border }]}
-              placeholder="e.g. arun@safnora.com or phone..."
-              placeholderTextColor={colors.textMuted}
-              value={newMemberEmail}
-              onChangeText={setNewMemberEmail}
-            />
-
-            <TouchableOpacity style={styles.confirmAddMemberButton} onPress={handleAddMember}>
-              <Text style={styles.confirmAddMemberText}>Add to Trip</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
     </SafeAreaView>
   );
 }
@@ -656,7 +633,19 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 20,
   },
-  progressTitle: { fontSize: 16, fontWeight: '800', marginBottom: 16 },
+  progressHeaderRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  progressTitle: { fontSize: 16, fontWeight: '800' },
+  statusBadgePill: {
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    borderRadius: 12,
+  },
+  statusBadgeText: { fontSize: 12, fontWeight: '700' },
   progressBarWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -717,6 +706,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 10,
+  },
+  rupeeIconMetric: {
+    fontSize: 20,
+    fontWeight: '800',
+    color: '#F59E0B',
+  },
+  rupeeBadgeSmall: {
+    fontSize: 16,
+    fontWeight: '800',
+    color: '#F59E0B',
   },
   summaryTextWrapper: { flex: 1 },
   summaryValue: { fontSize: 15, fontWeight: '800' },
@@ -797,12 +796,4 @@ const styles = StyleSheet.create({
   pollQuestion: { fontSize: 15, fontWeight: '700', marginBottom: 10 },
   pollOptionBox: { padding: 12, backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: '#E2E8F0', borderRadius: 10, marginBottom: 8 },
   pollOptionText: { fontSize: 13, fontWeight: '600', color: '#0D253F' },
-  modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center', padding: 20 },
-  memberModalCard: { width: '100%', borderRadius: 20, borderWidth: 1, padding: 20 },
-  modalHeaderRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 },
-  modalTitle: { fontSize: 18, fontWeight: '800' },
-  modalSubtitle: { fontSize: 13, marginBottom: 16 },
-  inputModal: { height: 48, borderRadius: 12, borderWidth: 1, paddingHorizontal: 14, fontSize: 14, marginBottom: 16 },
-  confirmAddMemberButton: { height: 48, borderRadius: 24, backgroundColor: '#00A896', justifyContent: 'center', alignItems: 'center' },
-  confirmAddMemberText: { color: '#FFFFFF', fontWeight: '800', fontSize: 15 },
 });

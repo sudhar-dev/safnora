@@ -11,7 +11,7 @@ export default function AddTabScreen() {
 
   const options = [
     { title: 'Create New Trip', subtitle: 'Start planning a new group journey', icon: 'map-pin', route: '/(trips)/add-trip', color: '#00A896' },
-    { title: 'Add Expense', subtitle: 'Record shared costs and split balances', icon: 'dollar-sign', route: '/(trips)/calculator', color: '#F59E0B' },
+    { title: 'Add Expense', subtitle: 'Record shared costs and split balances', icon: 'credit-card', route: '/(trips)/calculator', color: '#F59E0B' },
     { title: 'Upload Memory', subtitle: 'Share photos and notes with your trip group', icon: 'image', route: '/(tabs)/memories', color: '#10B981' },
     { title: 'Save Destination', subtitle: 'Add places to your wishlist or itinerary', icon: 'compass', route: '/(tabs)/trips', color: '#6366F1' },
   ];

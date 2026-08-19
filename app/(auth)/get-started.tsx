@@ -59,7 +59,7 @@ export default function GetStartedScreen() {
                 <Text style={styles.featureText}>Collaborate</Text>
               </View>
               <View style={styles.featurePill}>
-                <Feather name="dollar-sign" size={18} color="#00A896" />
+                <Text style={{ fontSize: 16, fontWeight: '800', color: '#00A896' }}>₹</Text>
                 <Text style={styles.featureText}>Split Expenses</Text>
               </View>
             </View>
