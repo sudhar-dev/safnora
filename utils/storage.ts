@@ -10,7 +10,23 @@ export interface UserProfileData {
   avatarUrl?: string | null;
 }
 
+export interface TripData {
+  id: string;
+  title: string;
+  startingPoint?: string;
+  destination: string;
+  startDate?: string;
+  endDate?: string;
+  dates?: string;
+  description?: string;
+  status: 'Planning' | 'Active' | 'Completed';
+  members: number;
+  statusColor?: string;
+  createdAt?: string;
+}
+
 const STORAGE_KEY = '@safnora_user_profile';
+const TRIPS_STORAGE_KEY = '@safnora_trips';
 
 let AsyncStorageModule: any = null;
 
@@ -66,5 +82,62 @@ export const clearUserProfileFromStorage = async (): Promise<void> => {
     }
   } catch (e) {
     console.error('Error clearing user profile from storage:', e);
+  }
+};
+
+/* Dynamic Trip Storage Helpers */
+
+export const getTripsFromStorage = async (): Promise<TripData[]> => {
+  try {
+    if (Platform.OS === 'web') {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        const jsonValue = window.localStorage.getItem(TRIPS_STORAGE_KEY);
+        return jsonValue != null ? JSON.parse(jsonValue) : [];
+      }
+    } else if (AsyncStorageModule) {
+      const jsonValue = await AsyncStorageModule.getItem(TRIPS_STORAGE_KEY);
+      return jsonValue != null ? JSON.parse(jsonValue) : [];
+    }
+  } catch (e) {
+    console.error('Error reading trips from storage:', e);
+  }
+  return [];
+};
+
+export const saveTripToStorage = async (newTrip: TripData): Promise<TripData[]> => {
+  try {
+    const existingTrips = await getTripsFromStorage();
+    const updatedTrips = [newTrip, ...existingTrips];
+    const jsonValue = JSON.stringify(updatedTrips);
+    if (Platform.OS === 'web') {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        window.localStorage.setItem(TRIPS_STORAGE_KEY, jsonValue);
+      }
+    } else if (AsyncStorageModule) {
+      await AsyncStorageModule.setItem(TRIPS_STORAGE_KEY, jsonValue);
+    }
+    return updatedTrips;
+  } catch (e) {
+    console.error('Error saving trip to storage:', e);
+    return [];
+  }
+};
+
+export const deleteTripFromStorage = async (id: string): Promise<TripData[]> => {
+  try {
+    const existingTrips = await getTripsFromStorage();
+    const updatedTrips = existingTrips.filter((t) => t.id !== id);
+    const jsonValue = JSON.stringify(updatedTrips);
+    if (Platform.OS === 'web') {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        window.localStorage.setItem(TRIPS_STORAGE_KEY, jsonValue);
+      }
+    } else if (AsyncStorageModule) {
+      await AsyncStorageModule.setItem(TRIPS_STORAGE_KEY, jsonValue);
+    }
+    return updatedTrips;
+  } catch (e) {
+    console.error('Error deleting trip from storage:', e);
+    return [];
   }
 };
