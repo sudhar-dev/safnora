@@ -22,7 +22,7 @@ const FORM_WIDTH = width - 48; // Padding 24 on each side
 
 export default function AuthScreen() {
   const router = useRouter();
-  const { signIn } = useAuth();
+  const { signIn, signUp } = useAuth();
 
   // Keep 'login' as initial active tab as requested by user
   const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
@@ -74,7 +74,7 @@ export default function AuthScreen() {
       return;
     }
     setErrorMsg('');
-    await signIn(signUpEmail);
+    await signUp(signUpEmail, signUpName);
     router.replace('/(tabs)');
   };
 
@@ -287,7 +287,7 @@ export default function AuthScreen() {
           <TouchableOpacity
             style={styles.googleButton}
             onPress={() => {
-              signIn('google-user@safnora.com');
+              signUp('google-user@safnora.com', 'Google Explorer');
               router.replace('/(tabs)');
             }}
             activeOpacity={0.8}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAppTheme } from '@/context/ThemeContext';
 import { useAuth } from '@/context/AuthContext';
@@ -8,7 +8,7 @@ import Feather from '@expo/vector-icons/Feather';
 import { useRouter } from 'expo-router';
 
 export default function ProfileTabScreen() {
-  const { colors, colorScheme, toggleTheme } = useAppTheme();
+  const { colors } = useAppTheme();
   const { user, signOut } = useAuth();
   const router = useRouter();
 
@@ -35,12 +35,26 @@ export default function ProfileTabScreen() {
               <Text style={[styles.userEmail, { color: colors.textSecondary }]}>
                 {user?.email || 'thiru@safnora.com'}
               </Text>
+
+              {user?.phoneNumber ? (
+                <View style={styles.infoRow}>
+                  <Feather name="phone" size={12} color={colors.textSecondary} style={{ marginRight: 4 }} />
+                  <Text style={[styles.infoText, { color: colors.textSecondary }]}>{user.phoneNumber}</Text>
+                </View>
+              ) : null}
+
               <View style={styles.roleBadge}>
                 <Feather name="shield" size={12} color="#00A896" style={{ marginRight: 4 }} />
-                <Text style={styles.roleText}>Trip Lead Explorer</Text>
+                <Text style={styles.roleText}>{user?.role || 'Trip Lead Explorer'}</Text>
               </View>
             </View>
           </View>
+
+          {user?.bio ? (
+            <View style={[styles.bioBox, { backgroundColor: colors.surfaceSubtle }]}>
+              <Text style={[styles.bioText, { color: colors.text }]}>{user.bio}</Text>
+            </View>
+          ) : null}
 
           {/* Edit Profile Action Button */}
           <TouchableOpacity
@@ -93,20 +107,15 @@ export default function ProfileTabScreen() {
         <Text style={[styles.sectionTitle, { color: colors.text }]}>Preferences & Settings</Text>
 
         <View style={[styles.menuCard, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-          {/* Dark Mode Toggle */}
+          {/* App Theme */}
           <View style={[styles.menuRow, { borderBottomColor: colors.border }]}>
             <View style={styles.menuLeft}>
               <View style={[styles.menuIconWrapper, { backgroundColor: '#00A89615' }]}>
-                <Feather name={colorScheme === 'dark' ? 'moon' : 'sun'} size={18} color="#00A896" />
+                <Feather name="sun" size={18} color="#00A896" />
               </View>
-              <Text style={[styles.menuText, { color: colors.text }]}>Dark Theme</Text>
+              <Text style={[styles.menuText, { color: colors.text }]}>App Theme</Text>
             </View>
-            <Switch
-              value={colorScheme === 'dark'}
-              onValueChange={toggleTheme}
-              trackColor={{ false: '#CBD5E1', true: '#00A896' }}
-              thumbColor="#FFFFFF"
-            />
+            <Text style={styles.themeValueText}>Light Mode</Text>
           </View>
 
           {/* Notifications */}
@@ -165,7 +174,7 @@ const styles = StyleSheet.create({
   avatarHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 12,
   },
   avatarLarge: {
     width: 68,
@@ -179,7 +188,9 @@ const styles = StyleSheet.create({
   avatarTextLarge: { color: '#FFFFFF', fontWeight: '800', fontSize: 26 },
   userInfoText: { flex: 1 },
   userName: { fontSize: 20, fontWeight: '800', marginBottom: 2 },
-  userEmail: { fontSize: 13, marginBottom: 6 },
+  userEmail: { fontSize: 13, marginBottom: 4 },
+  infoRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 6 },
+  infoText: { fontSize: 12 },
   roleBadge: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -190,6 +201,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   roleText: { fontSize: 11, fontWeight: '700', color: '#00A896' },
+  bioBox: {
+    padding: 12,
+    borderRadius: 12,
+    marginBottom: 14,
+  },
+  bioText: { fontSize: 13, fontStyle: 'italic', lineHeight: 18 },
   editProfileButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -250,6 +267,7 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   menuText: { fontSize: 15, fontWeight: '600' },
+  themeValueText: { fontSize: 14, fontWeight: '700', color: '#00A896' },
   logoutButton: {
     flexDirection: 'row',
     alignItems: 'center',

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAppTheme } from '@/context/ThemeContext';
 import { useAuth } from '@/context/AuthContext';
@@ -8,15 +8,31 @@ import { useRouter } from 'expo-router';
 
 export default function EditProfileScreen() {
   const { colors } = useAppTheme();
-  const { user } = useAuth();
+  const { user, updateProfile } = useAuth();
   const router = useRouter();
 
   const [displayName, setDisplayName] = useState(user?.displayName || 'Thiru Arasu');
-  const [phoneNumber, setPhoneNumber] = useState('+91 98765 43210');
-  const [bio, setBio] = useState('Passionate group trip explorer & photographer 🏔️✈️');
+  const [phoneNumber, setPhoneNumber] = useState(user?.phoneNumber || '+91 98765 43210');
+  const [bio, setBio] = useState(user?.bio || 'Passionate group trip explorer & photographer 🏔️');
+  const [isSaving, setIsSaving] = useState(false);
 
-  const handleSave = () => {
-    // Save profile logic
+  useEffect(() => {
+    if (user) {
+      setDisplayName(user.displayName || '');
+      setPhoneNumber(user.phoneNumber || '+91 98765 43210');
+      setBio(user.bio || 'Passionate group trip explorer & photographer 🏔️');
+    }
+  }, [user]);
+
+  const handleSave = async () => {
+    if (!displayName) return;
+    setIsSaving(true);
+    await updateProfile({
+      displayName,
+      phoneNumber,
+      bio,
+    });
+    setIsSaving(false);
     router.back();
   };
 
@@ -28,8 +44,8 @@ export default function EditProfileScreen() {
           <Feather name="chevron-left" size={24} color={colors.text} />
         </TouchableOpacity>
         <Text style={[styles.headerTitle, { color: colors.text }]}>Edit Profile</Text>
-        <TouchableOpacity onPress={handleSave} style={styles.saveHeaderButton}>
-          <Text style={styles.saveHeaderText}>Save</Text>
+        <TouchableOpacity onPress={handleSave} style={styles.saveHeaderButton} disabled={isSaving}>
+          <Text style={styles.saveHeaderText}>{isSaving ? 'Saving...' : 'Save'}</Text>
         </TouchableOpacity>
       </View>
 
@@ -56,6 +72,8 @@ export default function EditProfileScreen() {
             style={[styles.input, { backgroundColor: colors.surface, color: colors.text, borderColor: colors.border }]}
             value={displayName}
             onChangeText={setDisplayName}
+            placeholder="Enter full name"
+            placeholderTextColor={colors.textMuted}
           />
         </View>
 
@@ -75,6 +93,8 @@ export default function EditProfileScreen() {
             value={phoneNumber}
             onChangeText={setPhoneNumber}
             keyboardType="phone-pad"
+            placeholder="Enter phone number"
+            placeholderTextColor={colors.textMuted}
           />
         </View>
 
@@ -84,13 +104,19 @@ export default function EditProfileScreen() {
             style={[styles.textArea, { backgroundColor: colors.surface, color: colors.text, borderColor: colors.border }]}
             value={bio}
             onChangeText={setBio}
+            placeholder="Write a brief travel bio..."
+            placeholderTextColor={colors.textMuted}
             multiline
             numberOfLines={3}
           />
         </View>
 
-        <TouchableOpacity style={[styles.saveButton, { backgroundColor: colors.primary }]} onPress={handleSave}>
-          <Text style={styles.saveButtonText}>SAVE CHANGES</Text>
+        <TouchableOpacity
+          style={[styles.saveButton, { backgroundColor: colors.primary }]}
+          onPress={handleSave}
+          disabled={isSaving}
+        >
+          <Text style={styles.saveButtonText}>{isSaving ? 'SAVING...' : 'SAVE CHANGES'}</Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>

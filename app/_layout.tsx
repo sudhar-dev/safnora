@@ -4,7 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import 'react-native-reanimated';
 
-import { ThemeContextProvider, useAppTheme } from '@/context/ThemeContext';
+import { ThemeContextProvider } from '@/context/ThemeContext';
 import { AuthProvider } from '@/context/AuthContext';
 import { ToastProvider } from '@/context/ToastContext';
 
@@ -12,11 +12,9 @@ import { ToastProvider } from '@/context/ToastContext';
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
 function GlobalAppNavigation() {
-  const { colorScheme } = useAppTheme();
-
   return (
     <>
-      <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} translucent />
+      <StatusBar style="dark" translucent />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
