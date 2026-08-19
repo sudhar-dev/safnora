@@ -56,6 +56,14 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size }) => <Feather name="user" size={size} color={color} />,
         }}
       />
+
+      {/* Explicitly hide legacy explore screen from tab bar */}
+      <Tabs.Screen
+        name="explore"
+        options={{
+          href: null,
+        }}
+      />
     </Tabs>
   );
 }

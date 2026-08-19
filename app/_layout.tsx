@@ -4,12 +4,30 @@ import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import 'react-native-reanimated';
 
-import { ThemeContextProvider } from '@/context/ThemeContext';
+import { ThemeContextProvider, useAppTheme } from '@/context/ThemeContext';
 import { AuthProvider } from '@/context/AuthContext';
 import { ToastProvider } from '@/context/ToastContext';
 
 // Prevent splash screen from auto hiding until ready
 SplashScreen.preventAutoHideAsync().catch(() => {});
+
+function GlobalAppNavigation() {
+  const { colorScheme } = useAppTheme();
+
+  return (
+    <>
+      <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} translucent />
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+        <Stack.Screen name="edit-profile" options={{ headerShown: false }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="(trips)" options={{ headerShown: false }} />
+        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+      </Stack>
+    </>
+  );
+}
 
 export default function RootLayout() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -17,7 +35,6 @@ export default function RootLayout() {
   useEffect(() => {
     async function prepare() {
       try {
-        // Keep splash screen visible for 1.5 seconds
         await new Promise((resolve) => setTimeout(resolve, 1500));
       } catch (e) {
         console.warn('Splash screen preparation error:', e);
@@ -29,7 +46,6 @@ export default function RootLayout() {
     prepare();
   }, []);
 
-  // Hide splash screen immediately when appIsReady becomes true
   useEffect(() => {
     if (appIsReady) {
       SplashScreen.hideAsync().catch(() => {});
@@ -44,14 +60,7 @@ export default function RootLayout() {
     <ThemeContextProvider>
       <AuthProvider>
         <ToastProvider>
-          <Stack screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="(trips)" options={{ headerShown: false }} />
-            <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-          </Stack>
-          <StatusBar style="dark" />
+          <GlobalAppNavigation />
         </ToastProvider>
       </AuthProvider>
     </ThemeContextProvider>

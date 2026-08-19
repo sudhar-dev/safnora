@@ -12,8 +12,8 @@ export default function HomeScreen() {
 
   const quickActions = [
     { title: 'Create Trip', icon: 'plus-circle', route: '/(trips)/add-trip', color: '#00A896' },
-    { title: 'Explore Places', icon: 'navigation', route: '/(tabs)/explore', color: '#6366F1' },
-    { title: 'Trip Memories', icon: 'image', route: '/(tabs)/explore', color: '#10B981' },
+    { title: 'Explore Places', icon: 'navigation', route: '/(tabs)/trips', color: '#6366F1' },
+    { title: 'Trip Memories', icon: 'image', route: '/(tabs)/memories', color: '#10B981' },
     { title: 'Expenses', icon: 'dollar-sign', route: '/(trips)/calculator', color: '#F59E0B' },
   ];
 
