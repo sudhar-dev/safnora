@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
+import { StyleProp, TextStyle } from 'react-native';
 import Feather from '@expo/vector-icons/Feather';
 
 const FEATHER_MAPPING: Record<string, keyof typeof Feather.glyphMap> = {
@@ -33,7 +33,7 @@ export function IconSymbol({
   name: IconSymbolName;
   size?: number;
   color: string;
-  style?: StyleProp<ViewStyle>;
+  style?: StyleProp<TextStyle>;
 }) {
   const glyphName = FEATHER_MAPPING[name] || 'navigation';
   return <Feather name={glyphName} size={size} color={color} style={style} />;

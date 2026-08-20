@@ -19,7 +19,7 @@ export interface TripData {
   endDate?: string;
   dates?: string;
   description?: string;
-  status: 'Planning' | 'Active' | 'Completed';
+  status: 'Planning' | 'Ready' | 'Active' | 'Completed';
   members: number;
   statusColor?: string;
   createdAt?: string;

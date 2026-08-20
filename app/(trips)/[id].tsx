@@ -560,7 +560,7 @@ export default function TripDetailsScreen() {
                 style={styles.openCalculatorButton}
                 onPress={() => router.push(`/(trips)/calculator?tripId=${trip.id}` as any)}
               >
-                <Feather name="calculator" size={18} color="#FFFFFF" style={{ marginRight: 8 }} />
+                <Feather name={"calculator" as any} size={18} color="#FFFFFF" style={{ marginRight: 8 }} />
                 <Text style={styles.openCalculatorText}>Open Dedicated Expense Calculator & Split</Text>
               </TouchableOpacity>
 
