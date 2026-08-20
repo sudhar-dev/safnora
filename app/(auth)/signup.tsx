@@ -13,7 +13,6 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useAuth } from '@/context/AuthContext';
-import { SAFNORA_BRAND } from '@/constants/theme';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 
 export default function SignUpScreen() {

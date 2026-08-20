@@ -20,7 +20,7 @@ export default function ExpenseCalculatorScreen() {
   const [amount, setAmount] = useState('');
   const [paidBy, setPaidBy] = useState('Thiru Arasu');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [splitMembers, setSplitMembers] = useState(5);
+  const [splitMembers] = useState(5);
 
   const memberOptions = ['Thiru Arasu', 'Arun Kumar', 'Kavya Sharma', 'Praveen Raj', 'Ananya Verma'];
 

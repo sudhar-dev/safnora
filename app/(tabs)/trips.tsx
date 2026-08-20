@@ -181,7 +181,7 @@ export default function TripsTabScreen() {
             </View>
 
             <Text style={styles.deleteMessage}>
-              Are you sure you want to delete <Text style={styles.tripNameHighlight}>"{selectedTripToDelete?.title}"</Text>? This action will remove all saved itinerary notes and split expenses.
+              Are you sure you want to delete <Text style={styles.tripNameHighlight}>&quot;{selectedTripToDelete?.title}&quot;</Text>? This action will remove all saved itinerary notes and split expenses.
             </Text>
 
             <View style={styles.deleteActionsRow}>

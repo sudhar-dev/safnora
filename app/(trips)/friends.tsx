@@ -173,7 +173,7 @@ export default function FriendsScreen() {
           Invite Contacts to SAFNORA ({nonRegisteredUsers.length})
         </Text>
         <Text style={[styles.sectionCaption, { color: colors.textSecondary }]}>
-          Contacts who haven't installed the app yet
+          Contacts who haven&apos;t installed the app yet
         </Text>
 
         <View style={[styles.listCard, { backgroundColor: colors.surface, borderColor: colors.border }]}>
