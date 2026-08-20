@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useState } from 'react';
-import { View, Text, StyleSheet, Animated } from 'react-native';
+import React, { createContext, useContext, useState } from "react";
+import { View, Text, StyleSheet, Animated } from "react-native";
 
-type ToastType = 'info' | 'success' | 'warning' | 'error';
+type ToastType = "info" | "success" | "warning" | "error";
 
 interface ToastMessage {
   id: string;
@@ -17,10 +17,12 @@ const ToastContext = createContext<ToastContextType>({
   showToast: () => {},
 });
 
-export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [toast, setToast] = useState<ToastMessage | null>(null);
 
-  const showToast = (message: string, type: ToastType = 'info') => {
+  const showToast = (message: string, type: ToastType = "info") => {
     const id = Math.random().toString();
     setToast({ id, message, type });
     setTimeout(() => {
@@ -44,7 +46,7 @@ export const useToast = () => useContext(ToastContext);
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 50,
     left: 20,
     right: 20,
@@ -53,19 +55,19 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     zIndex: 9999,
     elevation: 6,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
   },
   text: {
-    color: '#FFFFFF',
-    fontWeight: '600',
+    color: "#FFFFFF",
+    fontWeight: "600",
     fontSize: 14,
-    textAlign: 'center',
+    textAlign: "center",
   },
-  info: { backgroundColor: '#0284C7' },
-  success: { backgroundColor: '#10B981' },
-  warning: { backgroundColor: '#F59E0B' },
-  error: { backgroundColor: '#EF4444' },
+  info: { backgroundColor: "#0284C7" },
+  success: { backgroundColor: "#10B981" },
+  warning: { backgroundColor: "#F59E0B" },
+  error: { backgroundColor: "#EF4444" },
 });

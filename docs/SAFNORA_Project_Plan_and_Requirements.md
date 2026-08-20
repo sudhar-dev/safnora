@@ -16,7 +16,7 @@ trip-related information\
 > modules below are the team\'s proposed product scope built around that
 > problem statement.
 
-------------------------------------------------------------------------
+---
 
 ## 1. Product Vision {#1-product-vision}
 
@@ -31,7 +31,7 @@ journey.
 > **SAFNORA connects people, places, plans, expenses and memories into
 > one complete digital journey.**
 
-------------------------------------------------------------------------
+---
 
 ## 2. Problem {#2-problem}
 
@@ -41,20 +41,20 @@ galleries, cloud storage and social platforms.
 
 This creates:
 
--   Scattered information
--   Decisions buried in conversations
--   Difficult expense tracking
--   Photos distributed across members
--   Incomplete trip history
--   Difficult document retrieval
--   No single source of truth for the trip
+- Scattered information
+- Decisions buried in conversations
+- Difficult expense tracking
+- Photos distributed across members
+- Incomplete trip history
+- Difficult document retrieval
+- No single source of truth for the trip
 
 ### Proposed opportunity
 
 Make the **trip itself the central workspace** for all planning,
 coordination, management and memories.
 
-------------------------------------------------------------------------
+---
 
 # 3. Objectives {#3-objectives}
 
@@ -67,17 +67,17 @@ coordination, management and memories.
 7.  Reduce dependency on multiple disconnected applications.
 8.  Provide a scalable base for future travel integrations.
 
-------------------------------------------------------------------------
+---
 
 # 4. Target Users {#4-target-users}
 
--   Friends and families
--   College and student groups
--   Corporate teams
--   Travel communities
--   Organized group tours
+- Friends and families
+- College and student groups
+- Corporate teams
+- Travel communities
+- Organized group tours
 
-------------------------------------------------------------------------
+---
 
 # 5. Product Modules {#5-product-modules}
 
@@ -85,71 +85,71 @@ coordination, management and memories.
 
 ### Features
 
--   Registration
--   Login/logout
--   Google Sign-In
--   Password reset
--   User profile
--   Profile photo
--   Account settings
--   Account deletion
+- Registration
+- Login/logout
+- Google Sign-In
+- Password reset
+- User profile
+- Profile photo
+- Account settings
+- Account deletion
 
 ### Firebase
 
--   Firebase Authentication
--   Firestore user profile
--   Firebase Storage for profile images
+- Firebase Authentication
+- Firestore user profile
+- Firebase Storage for profile images
 
-------------------------------------------------------------------------
+---
 
 ## 5.2 Trip Management {#52-trip-management}
 
 ### Features
 
--   Create trip
--   Edit trip
--   Archive/delete trip
--   Trip name
--   Destination
--   Start/end date
--   Description
--   Cover image
--   Privacy
--   Trip status
+- Create trip
+- Edit trip
+- Archive/delete trip
+- Trip name
+- Destination
+- Start/end date
+- Description
+- Cover image
+- Privacy
+- Trip status
 
 ### Trip statuses
 
--   Draft
--   Planning
--   Active
--   Completed
--   Archived
+- Draft
+- Planning
+- Active
+- Completed
+- Archived
 
 ### Trip dashboard
 
--   Trip overview
--   Members
--   Upcoming activities
--   Expense summary
--   Recent memories
--   Activity feed
--   Quick actions
+- Trip overview
+- Members
+- Upcoming activities
+- Expense summary
+- Recent memories
+- Activity feed
+- Quick actions
 
-------------------------------------------------------------------------
+---
 
 ## 5.3 Group & Member Management {#53-group--member-management}
 
 ### Features
 
--   Invite members
--   Invite link
--   QR invitation
--   Join request
--   Accept/reject member
--   Remove member
--   Member list
--   Roles
--   Permissions
+- Invite members
+- Invite link
+- QR invitation
+- Join request
+- Accept/reject member
+- Remove member
+- Member list
+- Roles
+- Permissions
 
 ### Roles
 
@@ -158,72 +158,72 @@ coordination, management and memories.
 **Member** --- normal contribution\
 **Viewer** --- read-only access
 
-------------------------------------------------------------------------
+---
 
 ## 5.4 Places & Maps {#54-places--maps}
 
 ### Features
 
--   Search places
--   Add destination
--   Save place
--   Remove place
--   Categories
--   Address
--   Coordinates
--   Notes
--   Priority
--   Visit status
--   Added-by member
+- Search places
+- Add destination
+- Save place
+- Remove place
+- Categories
+- Address
+- Coordinates
+- Notes
+- Priority
+- Visit status
+- Added-by member
 
 ### Categories
 
--   Attraction
--   Restaurant
--   Hotel
--   Activity
--   Shopping
--   Transport
--   Emergency
--   Custom
+- Attraction
+- Restaurant
+- Hotel
+- Activity
+- Shopping
+- Transport
+- Emergency
+- Custom
 
 ### Maps
 
 Use Google Maps / Places APIs for:
 
--   Place search
--   Map display
--   Coordinates
--   Directions
--   Route visualization
+- Place search
+- Map display
+- Coordinates
+- Directions
+- Route visualization
 
-------------------------------------------------------------------------
+---
 
 ## 5.5 Collaborative Itinerary {#55-collaborative-itinerary}
 
 ### Features
 
--   Day-wise itinerary
--   Activities
--   Time slots
--   Locations
--   Notes
--   Reordering
--   Assigned members
--   Estimated cost
--   Completion status
+- Day-wise itinerary
+- Activities
+- Time slots
+- Locations
+- Notes
+- Reordering
+- Assigned members
+- Estimated cost
+- Completion status
 
 ### Planned vs Actual
 
 Future support for:
 
--   Planned time
--   Actual time
--   Delays
--   Changes
--   Completion
+- Planned time
+- Actual time
+- Delays
+- Changes
+- Completion
 
-------------------------------------------------------------------------
+---
 
 ## 5.6 Polls & Group Decisions {#56-polls--group-decisions}
 
@@ -231,14 +231,14 @@ A key proposed SAFNORA workflow.
 
 ### Features
 
--   Create poll
--   Add options
--   Voting deadline
--   Member voting
--   Vote count
--   Close poll
--   Final result
--   Convert result to itinerary/place
+- Create poll
+- Add options
+- Voting deadline
+- Member voting
+- Vote count
+- Close poll
+- Final result
+- Convert result to itinerary/place
 
 ### Workflow
 
@@ -246,66 +246,66 @@ A key proposed SAFNORA workflow.
 
 ### Use cases
 
--   Destination
--   Restaurant
--   Hotel
--   Activity
--   Transport
--   Departure time
+- Destination
+- Restaurant
+- Hotel
+- Activity
+- Transport
+- Departure time
 
-------------------------------------------------------------------------
+---
 
 ## 5.7 Expense Management {#57-expense-management}
 
 ### Features
 
--   Add expense
--   Category
--   Amount
--   Currency
--   Payer
--   Participants
--   Split method
--   Date
--   Location
--   Note
--   Receipt
+- Add expense
+- Category
+- Amount
+- Currency
+- Payer
+- Participants
+- Split method
+- Date
+- Location
+- Note
+- Receipt
 
 ### Categories
 
--   Accommodation
--   Food
--   Transport
--   Tickets
--   Activities
--   Shopping
--   Fuel
--   Parking
--   Miscellaneous
+- Accommodation
+- Food
+- Transport
+- Tickets
+- Activities
+- Shopping
+- Fuel
+- Parking
+- Miscellaneous
 
 ### Split methods
 
--   Equal
--   Custom amount
--   Percentage
--   Shares
+- Equal
+- Custom amount
+- Percentage
+- Shares
 
-------------------------------------------------------------------------
+---
 
 ## 5.8 Expense Settlement {#58-expense-settlement}
 
 ### Features
 
--   Member balance
--   Who paid
--   Who owes
--   Settlement status
--   Mark settled
--   Settlement history
+- Member balance
+- Who paid
+- Who owes
+- Settlement status
+- Mark settled
+- Settlement history
 
 ### Example
 
-``` text
+```text
 Arun paid ₹4,000
 Thiru owes ₹1,000
 Karthi owes ₹1,000
@@ -314,25 +314,25 @@ Prasanna owes ₹1,000
 
 Future enhancement: minimize the number of settlement transactions.
 
-------------------------------------------------------------------------
+---
 
 ## 5.9 Shared Memories {#59-shared-memories}
 
 ### Features
 
--   Photos
--   Videos
--   Notes
--   Captions
--   Location
--   Date/time
--   Member tagging
--   Itinerary association
--   Optional expense association
+- Photos
+- Videos
+- Notes
+- Captions
+- Location
+- Date/time
+- Member tagging
+- Itinerary association
+- Optional expense association
 
 ### Memory model
 
-``` text
+```text
 Memory
 ├── Trip
 ├── Creator
@@ -349,7 +349,7 @@ Memory
 
 **Not \"My Photos\" --- \"Our Trip Memories\".**
 
-------------------------------------------------------------------------
+---
 
 ## 5.10 Trip Activity Feed {#510-trip-activity-feed}
 
@@ -357,20 +357,20 @@ Important trip actions are recorded chronologically.
 
 ### Events
 
--   Member joined
--   Place added
--   Itinerary changed
--   Poll created
--   Poll completed
--   Expense added
--   Expense settled
--   Memory uploaded
--   Document uploaded
--   Trip updated
+- Member joined
+- Place added
+- Itinerary changed
+- Poll created
+- Poll completed
+- Expense added
+- Expense settled
+- Memory uploaded
+- Document uploaded
+- Trip updated
 
 ### Example
 
-``` text
+```text
 10:30 — Arun added Athirapally Falls
 11:15 — Karthi created a destination poll
 12:05 — 6 members voted for Valparai
@@ -379,109 +379,109 @@ Important trip actions are recorded chronologically.
 
 The activity feed becomes the trip\'s chronological source of truth.
 
-------------------------------------------------------------------------
+---
 
 ## 5.11 Route & Location {#511-route--location}
 
 ### Core
 
--   Planned route
--   Destination sequence
--   Distance
--   Estimated travel time
--   Visited places
--   Route history
+- Planned route
+- Destination sequence
+- Distance
+- Estimated travel time
+- Visited places
+- Route history
 
 ### Phase 2
 
--   Opt-in live location
--   Group map
--   Member location status
--   Location sharing timer
+- Opt-in live location
+- Group map
+- Member location status
+- Location sharing timer
 
 ### Privacy
 
--   Explicit consent
--   User-controlled sharing
--   Visible status
--   Optional expiry
+- Explicit consent
+- User-controlled sharing
+- Visible status
+- Optional expiry
 
-------------------------------------------------------------------------
+---
 
 ## 5.12 Documents & Bookings {#512-documents--bookings}
 
 ### Documents
 
--   Hotel bookings
--   Tickets
--   Permits
--   Receipts
--   Travel documents
+- Hotel bookings
+- Tickets
+- Permits
+- Receipts
+- Travel documents
 
 ### Features
 
--   Upload
--   Preview
--   Download
--   Delete
--   Categorize
--   Link to trip
--   Link to itinerary
+- Upload
+- Preview
+- Download
+- Delete
+- Categorize
+- Link to trip
+- Link to itinerary
 
 ### Storage
 
 Firebase Cloud Storage.
 
-------------------------------------------------------------------------
+---
 
 ## 5.13 Checklists & Tasks {#513-checklists--tasks}
 
 ### Personal
 
--   Clothes
--   Charger
--   ID
--   Camera
--   Personal items
+- Clothes
+- Charger
+- ID
+- Camera
+- Personal items
 
 ### Group
 
--   First-aid kit
--   Common equipment
--   Documents
--   Emergency supplies
+- First-aid kit
+- Common equipment
+- Documents
+- Emergency supplies
 
 ### Tasks
 
--   Create
--   Assign
--   Due date
--   Status
--   Completion
+- Create
+- Assign
+- Due date
+- Status
+- Completion
 
-------------------------------------------------------------------------
+---
 
 ## 5.14 Notifications {#514-notifications}
 
 ### Events
 
--   Trip invitation
--   Join request
--   Poll created
--   Poll result
--   Itinerary change
--   Expense added
--   Settlement reminder
--   Memory uploaded
--   Upcoming activity
--   Document added
--   Trip starting soon
+- Trip invitation
+- Join request
+- Poll created
+- Poll result
+- Itinerary change
+- Expense added
+- Settlement reminder
+- Memory uploaded
+- Upcoming activity
+- Document added
+- Trip starting soon
 
 ### Technology
 
 Firebase Cloud Messaging.
 
-------------------------------------------------------------------------
+---
 
 ## 5.15 Trip Sharing {#515-trip-sharing}
 
@@ -493,13 +493,13 @@ Firebase Cloud Messaging.
 
 ### Privacy controls
 
--   Expense visibility
--   Member visibility
--   Memory visibility
--   Document visibility
--   Public/private status
+- Expense visibility
+- Member visibility
+- Memory visibility
+- Document visibility
+- Public/private status
 
-------------------------------------------------------------------------
+---
 
 ## 5.16 Trip Capsule {#516-trip-capsule}
 
@@ -507,21 +507,21 @@ The final digital representation of a completed trip.
 
 ### Contains
 
--   Trip overview
--   Members
--   Destinations
--   Route
--   Timeline
--   Expenses
--   Memories
--   Photos
--   Videos
--   Highlights
--   Statistics
+- Trip overview
+- Members
+- Destinations
+- Route
+- Timeline
+- Expenses
+- Memories
+- Photos
+- Videos
+- Highlights
+- Statistics
 
 ### Example
 
-``` text
+```text
 ATHIRAPALLY — VALPARAI 2026
 
 8 Members
@@ -533,13 +533,13 @@ ATHIRAPALLY — VALPARAI 2026
 48 Memories
 ```
 
-------------------------------------------------------------------------
+---
 
 # 6. Core User Flows {#6-core-user-flows}
 
 ## Create Trip
 
-``` text
+```text
 Login
 → Create Trip
 → Add Destination & Dates
@@ -550,7 +550,7 @@ Login
 
 ## Plan Trip
 
-``` text
+```text
 Trip
 → Search Places
 → Add Places
@@ -562,7 +562,7 @@ Trip
 
 ## Expense
 
-``` text
+```text
 Trip
 → Add Expense
 → Select Payer
@@ -574,7 +574,7 @@ Trip
 
 ## Memory
 
-``` text
+```text
 Trip
 → Add Memory
 → Upload/Capture
@@ -586,7 +586,7 @@ Trip
 
 ## Complete Trip
 
-``` text
+```text
 Trip Ends
 → Mark Completed
 → Compile Timeline
@@ -596,11 +596,11 @@ Trip Ends
 → Trip Capsule
 ```
 
-------------------------------------------------------------------------
+---
 
 # 7. Mobile Navigation {#7-mobile-navigation}
 
-``` text
+```text
 Home
 Trips
 Create
@@ -610,7 +610,7 @@ Profile
 
 ## Trip Detail
 
-``` text
+```text
 Overview
 Itinerary
 Places
@@ -624,7 +624,7 @@ Checklist
 Members
 ```
 
-------------------------------------------------------------------------
+---
 
 # 8. Suggested Screen List {#8-suggested-screen-list}
 
@@ -708,41 +708,41 @@ Members
 46. Notifications
 47. Account Management
 
-------------------------------------------------------------------------
+---
 
 # 9. Technology Stack {#9-technology-stack}
 
 ## Mobile
 
--   React Native
--   TypeScript
+- React Native
+- TypeScript
 
 ## Backend / Cloud {#backend--cloud}
 
--   Firebase Authentication
--   Cloud Firestore
--   Firebase Cloud Functions
--   Firebase Cloud Storage
--   Firebase Cloud Messaging
+- Firebase Authentication
+- Cloud Firestore
+- Firebase Cloud Functions
+- Firebase Cloud Storage
+- Firebase Cloud Messaging
 
 ## Maps
 
--   Google Maps
--   Google Places API
--   Geolocation APIs
+- Google Maps
+- Google Places API
+- Geolocation APIs
 
 ## Firebase Supporting Services
 
--   Firebase Crashlytics
--   Firebase Analytics
--   Firebase Performance
--   Firebase App Distribution
+- Firebase Crashlytics
+- Firebase Analytics
+- Firebase Performance
+- Firebase App Distribution
 
-------------------------------------------------------------------------
+---
 
 # 10. Architecture {#10-architecture}
 
-``` text
+```text
                     SAFNORA
                        |
               React Native App
@@ -774,11 +774,11 @@ Members
              Google Maps / Places API
 ```
 
-------------------------------------------------------------------------
+---
 
 # 11. Firestore Data Model {#11-firestore-data-model}
 
-``` text
+```text
 users
 trips
 tripMembers
@@ -798,7 +798,7 @@ notifications
 
 ## User
 
-``` text
+```text
 users/{userId}
 
 id
@@ -813,7 +813,7 @@ status
 
 ## Trip
 
-``` text
+```text
 trips/{tripId}
 
 id
@@ -832,7 +832,7 @@ updatedAt
 
 ## Member
 
-``` text
+```text
 trips/{tripId}/members/{userId}
 
 userId
@@ -844,7 +844,7 @@ permissions
 
 ## Place
 
-``` text
+```text
 trips/{tripId}/places/{placeId}
 
 name
@@ -861,7 +861,7 @@ createdAt
 
 ## Itinerary
 
-``` text
+```text
 trips/{tripId}/itinerary/{itemId}
 
 day
@@ -878,7 +878,7 @@ estimatedCost
 
 ## Expense
 
-``` text
+```text
 trips/{tripId}/expenses/{expenseId}
 
 title
@@ -897,7 +897,7 @@ status
 
 ## Memory
 
-``` text
+```text
 trips/{tripId}/memories/{memoryId}
 
 createdBy
@@ -915,7 +915,7 @@ expenseId
 
 ## Activity
 
-``` text
+```text
 trips/{tripId}/activity/{activityId}
 
 type
@@ -926,11 +926,11 @@ metadata
 createdAt
 ```
 
-------------------------------------------------------------------------
+---
 
 # 12. Storage Structure {#12-storage-structure}
 
-``` text
+```text
 /users/{userId}/profile/
 /trips/{tripId}/memories/
 /trips/{tripId}/documents/
@@ -938,91 +938,91 @@ createdAt
 /trips/{tripId}/cover/
 ```
 
-------------------------------------------------------------------------
+---
 
 # 13. Security & Privacy {#13-security--privacy}
 
 ## Authentication
 
--   Firebase Authentication
--   Protected navigation
--   Session validation
+- Firebase Authentication
+- Protected navigation
+- Session validation
 
 ## Firestore
 
 Access should depend on:
 
--   Trip membership
--   Role
--   Permissions
--   Trip privacy
+- Trip membership
+- Role
+- Permissions
+- Trip privacy
 
 ## Storage
 
--   Member-based access
--   File-size limits
--   File-type validation
--   Secure storage rules
+- Member-based access
+- File-size limits
+- File-type validation
+- Secure storage rules
 
 ## Location
 
--   Explicit opt-in
--   User-controlled
--   Visible sharing state
--   Optional expiry
+- Explicit opt-in
+- User-controlled
+- Visible sharing state
+- Optional expiry
 
 ## Data Protection
 
--   Minimum necessary personal data
--   Secure Firestore rules
--   Input validation
--   No private data through uncontrolled public links
+- Minimum necessary personal data
+- Secure Firestore rules
+- Input validation
+- No private data through uncontrolled public links
 
-------------------------------------------------------------------------
+---
 
 # 14. Non-Functional Requirements {#14-non-functional-requirements}
 
 ## Performance
 
--   Fast startup
--   Pagination
--   Lazy media loading
--   Image compression
--   Efficient Firestore queries
+- Fast startup
+- Pagination
+- Lazy media loading
+- Image compression
+- Efficient Firestore queries
 
 ## Reliability
 
--   Offline persistence where appropriate
--   Retry handling
--   Background synchronization
--   Graceful failure handling
+- Offline persistence where appropriate
+- Retry handling
+- Background synchronization
+- Graceful failure handling
 
 ## Scalability
 
 Architecture should support growth in:
 
--   Users
--   Trips
--   Members
--   Activity events
--   Media
+- Users
+- Trips
+- Members
+- Activity events
+- Media
 
 ## Usability
 
--   Mobile-first
--   Simple navigation
--   Clear actions
--   Minimal steps
--   Accessible touch targets
+- Mobile-first
+- Simple navigation
+- Clear actions
+- Minimal steps
+- Accessible touch targets
 
 ## Maintainability
 
--   Feature-based React Native architecture
--   Reusable components
--   TypeScript models
--   Central Firebase configuration
+- Feature-based React Native architecture
+- Reusable components
+- TypeScript models
+- Central Firebase configuration
 
-------------------------------------------------------------------------
+---
 
 # 15. Competitive Differentiation {#15-competitive-differentiation}
 
@@ -1055,50 +1055,50 @@ Important trip actions become a chronological record.
 
 The completed journey becomes one digital record.
 
-------------------------------------------------------------------------
+---
 
 # 16. MVP Scope {#16-mvp-scope}
 
 ## P0 --- Must Have {#p0--must-have}
 
--   Authentication
--   User profile
--   Trip creation
--   Group members
--   Invitations
--   Places
--   Maps
--   Itinerary
--   Expenses
--   Expense splitting
--   Memories
--   Activity feed
--   Trip timeline
--   Trip Capsule
+- Authentication
+- User profile
+- Trip creation
+- Group members
+- Invitations
+- Places
+- Maps
+- Itinerary
+- Expenses
+- Expense splitting
+- Memories
+- Activity feed
+- Trip timeline
+- Trip Capsule
 
 ## P1
 
--   Polls
--   Documents
--   Checklists
--   Notifications
--   Route tracking
--   Trip sharing
+- Polls
+- Documents
+- Checklists
+- Notifications
+- Route tracking
+- Trip sharing
 
 ## P2
 
--   Live location
--   Offline enhancements
--   Advanced trip history
--   AI
+- Live location
+- Offline enhancements
+- Advanced trip history
+- AI
 
 ## P3
 
--   Booking integrations
--   Travel partners
--   Travel marketplace
+- Booking integrations
+- Travel partners
+- Travel marketplace
 
-------------------------------------------------------------------------
+---
 
 # 17. SIH Prototype Demo Flow {#17-sih-prototype-demo-flow}
 
@@ -1124,247 +1124,249 @@ Use one complete story instead of isolated feature demonstrations.
 
 This demonstrates the full product lifecycle.
 
-------------------------------------------------------------------------
+---
 
 # 18. Development Roadmap {#18-development-roadmap}
 
 ## Phase 0 --- Planning {#phase-0--planning}
 
--   Requirements
--   User flows
--   UX
--   Data model
--   Architecture
+- Requirements
+- User flows
+- UX
+- Data model
+- Architecture
 
 ## Phase 1 --- Foundation {#phase-1--foundation}
 
--   React Native
--   Firebase setup
--   Authentication
--   Navigation
--   Profile
+- React Native
+- Firebase setup
+- Authentication
+- Navigation
+- Profile
 
 ## Phase 2 --- Trip Core {#phase-2--trip-core}
 
--   Trip creation
--   Dashboard
--   Members
--   Invitations
+- Trip creation
+- Dashboard
+- Members
+- Invitations
 
 ## Phase 3 --- Planning {#phase-3--planning}
 
--   Places
--   Maps
--   Itinerary
--   Polls
+- Places
+- Maps
+- Itinerary
+- Polls
 
 ## Phase 4 --- Finance {#phase-4--finance}
 
--   Expenses
--   Splits
--   Balances
--   Settlement
+- Expenses
+- Splits
+- Balances
+- Settlement
 
 ## Phase 5 --- Memories {#phase-5--memories}
 
--   Media upload
--   Memory feed
--   Member tagging
--   Activity feed
+- Media upload
+- Memory feed
+- Member tagging
+- Activity feed
 
 ## Phase 6 --- History {#phase-6--history}
 
--   Timeline
--   Trip Capsule
--   Sharing
+- Timeline
+- Trip Capsule
+- Sharing
 
 ## Phase 7 --- Quality {#phase-7--quality}
 
--   Security rules
--   Performance
--   Offline testing
--   Device testing
--   Crash testing
+- Security rules
+- Performance
+- Offline testing
+- Device testing
+- Crash testing
 
 ## Phase 8 --- SIH Demo {#phase-8--sih-demo}
 
--   Demo data
--   End-to-end flow
--   UI polish
--   Presentation
--   Rehearsal
+- Demo data
+- End-to-end flow
+- UI polish
+- Presentation
+- Rehearsal
 
-------------------------------------------------------------------------
+---
 
 # 19. Testing Strategy {#19-testing-strategy}
 
 ## Unit
 
--   Expense calculations
--   Split logic
--   Validation
--   Utilities
+- Expense calculations
+- Split logic
+- Validation
+- Utilities
 
 ## Integration
 
--   Firebase Auth
--   Firestore
--   Storage
--   FCM
--   Maps
+- Firebase Auth
+- Firestore
+- Storage
+- FCM
+- Maps
 
 ## UI
 
--   Navigation
--   Forms
--   Itinerary
--   Expenses
--   Memory upload
+- Navigation
+- Forms
+- Itinerary
+- Expenses
+- Memory upload
 
 ## Security
 
--   Unauthorized trip access
--   Unauthorized documents
--   Member permissions
--   Storage rules
--   Public links
+- Unauthorized trip access
+- Unauthorized documents
+- Member permissions
+- Storage rules
+- Public links
 
 ## Performance
 
--   Large trips
--   Large activity feed
--   Multiple members
--   Large media sets
--   Slow networks
+- Large trips
+- Large activity feed
+- Multiple members
+- Large media sets
+- Slow networks
 
-------------------------------------------------------------------------
+---
 
 # 20. Acceptance Criteria {#20-acceptance-criteria}
 
 ## Trip
 
--   User can create and edit a trip.
--   User can invite members.
--   Members can join.
+- User can create and edit a trip.
+- User can invite members.
+- Members can join.
 
 ## Planning
 
--   Members can add places.
--   Places display on map.
--   Users can create itineraries.
--   Members can vote on polls.
+- Members can add places.
+- Places display on map.
+- Users can create itineraries.
+- Members can vote on polls.
 
 ## Expenses
 
--   User can add expense.
--   Participants can be selected.
--   System calculates balances.
--   Settlement can be recorded.
+- User can add expense.
+- Participants can be selected.
+- System calculates balances.
+- Settlement can be recorded.
 
 ## Memories
 
--   User can upload media.
--   User can add notes.
--   Members can be tagged.
--   Memory belongs to the correct trip.
+- User can upload media.
+- User can add notes.
+- Members can be tagged.
+- Memory belongs to the correct trip.
 
 ## Activity
 
--   Important actions are recorded.
--   Actions appear chronologically.
+- Important actions are recorded.
+- Actions appear chronologically.
 
 ## History
 
--   Completed trip is accessible.
--   Trip Capsule contains major trip information.
+- Completed trip is accessible.
+- Trip Capsule contains major trip information.
 
-------------------------------------------------------------------------
+---
 
 # 21. Risks & Mitigation {#21-risks--mitigation}
 
-  Risk                   Mitigation
-  ---------------------- ----------------------------------------
-  Firebase cost growth   Optimize reads, pagination and storage
-  Large media            Compression and file limits
-  Poor connectivity      Offline persistence and sync
-  Location privacy       Explicit consent and controls
-  Concurrent updates     Transactions and controlled writes
-  API limits             Caching and optimized requests
-  UI complexity          Progressive disclosure
-  Scope creep            Strict MVP prioritization
+Risk Mitigation
 
-------------------------------------------------------------------------
+---
+
+Firebase cost growth Optimize reads, pagination and storage
+Large media Compression and file limits
+Poor connectivity Offline persistence and sync
+Location privacy Explicit consent and controls
+Concurrent updates Transactions and controlled writes
+API limits Caching and optimized requests
+UI complexity Progressive disclosure
+Scope creep Strict MVP prioritization
+
+---
 
 # 22. Success Metrics {#22-success-metrics}
 
 ## Prototype
 
--   Trip creation succeeds
--   Members can join
--   Itinerary can be created
--   Expense split works
--   Media uploads
--   Activity feed updates
--   Trip Capsule generates
+- Trip creation succeeds
+- Members can join
+- Itinerary can be created
+- Expense split works
+- Media uploads
+- Activity feed updates
+- Trip Capsule generates
 
 ## Future Product Metrics
 
--   Trips created
--   Active trips
--   Members per trip
--   Places per trip
--   Expenses per trip
--   Memories uploaded
--   Poll participation
--   Completed Trip Capsules
--   Shared trips
+- Trips created
+- Active trips
+- Members per trip
+- Places per trip
+- Expenses per trip
+- Memories uploaded
+- Poll participation
+- Completed Trip Capsules
+- Shared trips
 
-------------------------------------------------------------------------
+---
 
 # 23. Future Scope {#23-future-scope}
 
 ## AI
 
--   AI itinerary suggestions
--   Natural-language trip planning
--   Smart recommendations
--   AI trip summaries
--   Automatic memory grouping
+- AI itinerary suggestions
+- Natural-language trip planning
+- Smart recommendations
+- AI trip summaries
+- Automatic memory grouping
 
 ## Finance
 
--   Receipt OCR
--   Automatic expense extraction
--   Multi-currency conversion
--   Optimized settlements
+- Receipt OCR
+- Automatic expense extraction
+- Multi-currency conversion
+- Optimized settlements
 
 ## Travel
 
--   Hotel integration
--   Transport integration
--   Activity booking
--   Local guide integration
+- Hotel integration
+- Transport integration
+- Activity booking
+- Local guide integration
 
 ## Social
 
--   Public travel profiles
--   Community trips
--   Travel stories
--   Trip discovery
+- Public travel profiles
+- Community trips
+- Travel stories
+- Trip discovery
 
 ## Analytics
 
--   Distance travelled
--   Total expenditure
--   Places visited
--   Expense categories
--   Travel statistics
+- Distance travelled
+- Total expenditure
+- Places visited
+- Expense categories
+- Travel statistics
 
-------------------------------------------------------------------------
+---
 
 # 24. Final Product Structure {#24-final-product-structure}
 
-``` text
+```text
 SAFNORA
 │
 ├── Authentication
@@ -1386,34 +1388,36 @@ SAFNORA
 └── Trip Capsule
 ```
 
-------------------------------------------------------------------------
+---
 
 # 25. Recommended Build Priority {#25-recommended-build-priority}
 
-  Priority   Module
-  ---------- ----------------------
-  P0         Authentication
-  P0         Trip Management
-  P0         Group & Members
-  P0         Places & Maps
-  P0         Itinerary
-  P0         Expenses
-  P0         Memories
-  P0         Activity Feed
-  P0         Trip Timeline
-  P0         Trip Capsule
-  P1         Polls
-  P1         Documents
-  P1         Checklists
-  P1         Notifications
-  P1         Route Tracking
-  P2         Live Location
-  P2         Offline Enhancements
-  P2         AI
-  P3         Booking Integrations
-  P3         Travel Marketplace
+Priority Module
 
-------------------------------------------------------------------------
+---
+
+P0 Authentication
+P0 Trip Management
+P0 Group & Members
+P0 Places & Maps
+P0 Itinerary
+P0 Expenses
+P0 Memories
+P0 Activity Feed
+P0 Trip Timeline
+P0 Trip Capsule
+P1 Polls
+P1 Documents
+P1 Checklists
+P1 Notifications
+P1 Route Tracking
+P2 Live Location
+P2 Offline Enhancements
+P2 AI
+P3 Booking Integrations
+P3 Travel Marketplace
+
+---
 
 # 26. SIH Presentation Alignment {#26-sih-presentation-alignment}
 
@@ -1433,7 +1437,7 @@ The six-slide structure is:
 The presentation should focus on the **problem → solution →
 differentiation → technology → feasibility → impact** story.
 
-------------------------------------------------------------------------
+---
 
 # 27. Final Product Pitch {#27-final-product-pitch}
 
@@ -1449,20 +1453,20 @@ differentiation → technology → feasibility → impact** story.
 
 **SAFNORA = SAFAR + AURA**
 
--   **Safar** --- Journey
--   **Aura** --- Experience, emotion and memories
+- **Safar** --- Journey
+- **Aura** --- Experience, emotion and memories
 
 ### Tagline
 
 > **Journeys Together. Memories Forever.**
 
-------------------------------------------------------------------------
+---
 
 # 28. Definition of Done --- SIH Prototype {#28-definition-of-done--sih-prototype}
 
 The prototype is ready when a judge can follow this complete flow:
 
-``` text
+```text
 LOGIN
  ↓
 CREATE TRIP
@@ -1498,7 +1502,7 @@ VIEW TRIP CAPSULE
 > trip creation to post-trip memory rather than demonstrating
 > disconnected screens.
 
-------------------------------------------------------------------------
+---
 
 # 29. Final Vision {#29-final-vision}
 

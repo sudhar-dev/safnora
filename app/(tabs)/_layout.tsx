@@ -1,7 +1,7 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-import Feather from '@expo/vector-icons/Feather';
-import { useAppTheme } from '@/context/ThemeContext';
+import { Tabs } from "expo-router";
+import React from "react";
+import Feather from "@expo/vector-icons/Feather";
+import { useAppTheme } from "@/context/ThemeContext";
 
 export default function TabLayout() {
   const { colors } = useAppTheme();
@@ -24,36 +24,46 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color, size }) => <Feather name="home" size={size} color={color} />,
+          title: "Home",
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="home" size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="trips"
         options={{
-          title: 'Trips',
-          tabBarIcon: ({ color, size }) => <Feather name="map-pin" size={size} color={color} />,
+          title: "Trips",
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="map-pin" size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="add"
         options={{
-          title: 'Add',
-          tabBarIcon: ({ color }) => <Feather name="plus-circle" size={28} color={color} />,
+          title: "Add",
+          tabBarIcon: ({ color }) => (
+            <Feather name="plus-circle" size={28} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="memories"
         options={{
-          title: 'Memories',
-          tabBarIcon: ({ color, size }) => <Feather name="image" size={size} color={color} />,
+          title: "Memories",
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="image" size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'Profile',
-          tabBarIcon: ({ color, size }) => <Feather name="user" size={size} color={color} />,
+          title: "Profile",
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="user" size={size} color={color} />
+          ),
         }}
       />
 

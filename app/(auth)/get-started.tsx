@@ -1,10 +1,18 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
-import { useRouter } from 'expo-router';
-import { SAFNORA_BRAND } from '@/constants/theme';
-import Feather from '@expo/vector-icons/Feather';
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+  ScrollView,
+} from "react-native";
+import { useRouter } from "expo-router";
+import { SAFNORA_BRAND } from "@/constants/theme";
+import Feather from "@expo/vector-icons/Feather";
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 
 export default function GetStartedScreen() {
   const router = useRouter();
@@ -23,7 +31,7 @@ export default function GetStartedScreen() {
         {/* Maximized Logo Container */}
         <View style={styles.heroLogoWrapper}>
           <Image
-            source={require('@/assets/images/logo/LogoPng.png')}
+            source={require("@/assets/images/logo/LogoPng.png")}
             style={styles.maximizedLogo}
             resizeMode="contain"
           />
@@ -40,12 +48,16 @@ export default function GetStartedScreen() {
       {/* Main Content Card Container with Clean Background */}
       <View style={styles.contentCardWrapper}>
         <View style={styles.contentCard}>
-          <ScrollView contentContainerStyle={styles.scrollInner} showsVerticalScrollIndicator={false}>
+          <ScrollView
+            contentContainerStyle={styles.scrollInner}
+            showsVerticalScrollIndicator={false}
+          >
             <Text style={styles.greetingTitle}>Welcome to SAFNORA!</Text>
             <Text style={styles.brandTagline}>{SAFNORA_BRAND.tagline}</Text>
 
             <Text style={styles.description}>
-              Connect people, places, plans, expenses, and memories into one complete digital journey.
+              Connect people, places, plans, expenses, and memories into one
+              complete digital journey.
             </Text>
 
             {/* Core Feature Badges */}
@@ -59,7 +71,11 @@ export default function GetStartedScreen() {
                 <Text style={styles.featureText}>Collaborate</Text>
               </View>
               <View style={styles.featurePill}>
-                <Text style={{ fontSize: 16, fontWeight: '800', color: '#00A896' }}>₹</Text>
+                <Text
+                  style={{ fontSize: 16, fontWeight: "800", color: "#00A896" }}
+                >
+                  ₹
+                </Text>
                 <Text style={styles.featureText}>Split Expenses</Text>
               </View>
             </View>
@@ -67,20 +83,26 @@ export default function GetStartedScreen() {
             {/* Primary GET STARTED Button */}
             <TouchableOpacity
               style={styles.getStartedButton}
-              onPress={() => router.push('/(auth)/login')}
+              onPress={() => router.push("/(auth)/login")}
               activeOpacity={0.85}
             >
               <Text style={styles.buttonText}>GET STARTED</Text>
-              <Feather name="chevron-right" size={20} color="#FFFFFF" style={{ marginLeft: 6 }} />
+              <Feather
+                name="chevron-right"
+                size={20}
+                color="#FFFFFF"
+                style={{ marginLeft: 6 }}
+              />
             </TouchableOpacity>
 
             <TouchableOpacity
               style={styles.loginLinkButton}
-              onPress={() => router.push('/(auth)/login')}
+              onPress={() => router.push("/(auth)/login")}
               activeOpacity={0.7}
             >
               <Text style={styles.loginLinkText}>
-                Already have an account? <Text style={styles.loginBold}>Log In</Text>
+                Already have an account?{" "}
+                <Text style={styles.loginBold}>Log In</Text>
               </Text>
             </TouchableOpacity>
           </ScrollView>
@@ -93,34 +115,34 @@ export default function GetStartedScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#00A896',
+    backgroundColor: "#00A896",
   },
   headerGraphic: {
-    height: '50%',
-    backgroundColor: '#00A896',
-    justifyContent: 'space-between',
-    position: 'relative',
-    overflow: 'hidden',
+    height: "50%",
+    backgroundColor: "#00A896",
+    justifyContent: "space-between",
+    position: "relative",
+    overflow: "hidden",
   },
   skyHeader: {
     paddingTop: 54,
     paddingHorizontal: 24,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     zIndex: 10,
   },
   moonContainer: {
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    justifyContent: "center",
+    alignItems: "center",
   },
   heroLogoWrapper: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     flex: 1,
     marginTop: -10,
     zIndex: 5,
@@ -130,7 +152,7 @@ const styles = StyleSheet.create({
     height: 220,
   },
   mountainWrapper: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
@@ -139,110 +161,110 @@ const styles = StyleSheet.create({
   leftPeak: {
     width: 0,
     height: 0,
-    borderStyle: 'solid',
+    borderStyle: "solid",
     borderLeftWidth: width * 0.35,
     borderRightWidth: width * 0.35,
     borderBottomWidth: 60,
-    borderLeftColor: 'transparent',
-    borderRightColor: 'transparent',
-    borderBottomColor: '#FFFFFF',
-    position: 'absolute',
+    borderLeftColor: "transparent",
+    borderRightColor: "transparent",
+    borderBottomColor: "#FFFFFF",
+    position: "absolute",
     left: -20,
     bottom: 0,
   },
   centerPeak: {
     width: 0,
     height: 0,
-    borderStyle: 'solid',
+    borderStyle: "solid",
     borderLeftWidth: width * 0.5,
     borderRightWidth: width * 0.5,
     borderBottomWidth: 80,
-    borderLeftColor: 'transparent',
-    borderRightColor: 'transparent',
-    borderBottomColor: '#FFFFFF',
-    position: 'absolute',
+    borderLeftColor: "transparent",
+    borderRightColor: "transparent",
+    borderBottomColor: "#FFFFFF",
+    position: "absolute",
     left: width * 0.1,
     bottom: 0,
   },
   rightPeak: {
     width: 0,
     height: 0,
-    borderStyle: 'solid',
+    borderStyle: "solid",
     borderLeftWidth: width * 0.4,
     borderRightWidth: width * 0.4,
     borderBottomWidth: 50,
-    borderLeftColor: 'transparent',
-    borderRightColor: 'transparent',
-    borderBottomColor: '#FFFFFF',
-    position: 'absolute',
+    borderLeftColor: "transparent",
+    borderRightColor: "transparent",
+    borderBottomColor: "#FFFFFF",
+    position: "absolute",
     right: -30,
     bottom: 0,
   },
   contentCardWrapper: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
   },
   contentCard: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     paddingHorizontal: 28,
     paddingTop: 24,
   },
   scrollInner: {
-    alignItems: 'center',
+    alignItems: "center",
     paddingBottom: 36,
   },
   greetingTitle: {
     fontSize: 28,
-    fontWeight: '800',
-    color: '#0D253F',
-    textAlign: 'center',
+    fontWeight: "800",
+    color: "#0D253F",
+    textAlign: "center",
     marginBottom: 4,
   },
   brandTagline: {
     fontSize: 15,
-    fontWeight: '600',
-    color: '#00A896',
-    textAlign: 'center',
+    fontWeight: "600",
+    color: "#00A896",
+    textAlign: "center",
     marginBottom: 14,
   },
   description: {
     fontSize: 14,
     lineHeight: 20,
-    color: '#64748B',
-    textAlign: 'center',
+    color: "#64748B",
+    textAlign: "center",
     marginBottom: 20,
   },
   featuresRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
     gap: 8,
     marginBottom: 28,
-    flexWrap: 'wrap',
+    flexWrap: "wrap",
   },
   featurePill: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 6,
-    backgroundColor: '#EEF6F8',
+    backgroundColor: "#EEF6F8",
     paddingHorizontal: 14,
     paddingVertical: 8,
     borderRadius: 20,
   },
   featureText: {
     fontSize: 13,
-    fontWeight: '600',
-    color: '#0D253F',
+    fontWeight: "600",
+    color: "#0D253F",
   },
   getStartedButton: {
-    width: '100%',
+    width: "100%",
     height: 54,
-    backgroundColor: '#00A896',
+    backgroundColor: "#00A896",
     borderRadius: 27,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#00A896',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#00A896",
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.35,
     shadowRadius: 10,
@@ -250,9 +272,9 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   buttonText: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: 16,
-    fontWeight: '800',
+    fontWeight: "800",
     letterSpacing: 1,
   },
   loginLinkButton: {
@@ -260,10 +282,10 @@ const styles = StyleSheet.create({
   },
   loginLinkText: {
     fontSize: 14,
-    color: '#64748B',
+    color: "#64748B",
   },
   loginBold: {
-    color: '#00A896',
-    fontWeight: '700',
+    color: "#00A896",
+    fontWeight: "700",
   },
 });

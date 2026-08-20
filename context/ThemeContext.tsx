@@ -1,7 +1,7 @@
-import React, { createContext, useContext } from 'react';
-import { Colors } from '@/constants/theme';
+import React, { createContext, useContext } from "react";
+import { Colors } from "@/constants/theme";
 
-type ColorSchemeName = 'light';
+type ColorSchemeName = "light";
 
 interface ThemeContextType {
   colorScheme: ColorSchemeName;
@@ -11,18 +11,22 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  colorScheme: 'light',
+  colorScheme: "light",
   colors: Colors.light,
   toggleTheme: () => {},
   setTheme: () => {},
 });
 
-export const ThemeContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const colorScheme: ColorSchemeName = 'light';
+export const ThemeContextProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const colorScheme: ColorSchemeName = "light";
   const colors = Colors.light;
 
   return (
-    <ThemeContext.Provider value={{ colorScheme, colors, toggleTheme: () => {}, setTheme: () => {} }}>
+    <ThemeContext.Provider
+      value={{ colorScheme, colors, toggleTheme: () => {}, setTheme: () => {} }}
+    >
       {children}
     </ThemeContext.Provider>
   );

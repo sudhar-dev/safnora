@@ -3,10 +3,11 @@ export interface User {
   name: string;
   email: string;
   avatarUrl?: string;
-  role?: 'Owner' | 'Co-Admin' | 'Member' | 'Viewer';
+  role?: "Owner" | "Co-Admin" | "Member" | "Viewer";
 }
 
-export type TripStatus = 'Draft' | 'Planning' | 'Active' | 'Completed' | 'Archived';
+export type TripStatus =
+  "Draft" | "Planning" | "Active" | "Completed" | "Archived";
 
 export interface Trip {
   id: string;
@@ -28,6 +29,14 @@ export interface Expense {
   currency: string;
   payerId: string;
   payerName: string;
-  category: 'Accommodation' | 'Food' | 'Transport' | 'Tickets' | 'Activities' | 'Shopping' | 'Fuel' | 'Miscellaneous';
+  category:
+    | "Accommodation"
+    | "Food"
+    | "Transport"
+    | "Tickets"
+    | "Activities"
+    | "Shopping"
+    | "Fuel"
+    | "Miscellaneous";
   date: string;
 }

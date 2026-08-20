@@ -1,10 +1,10 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from "react";
 import {
   UserProfileData,
   saveUserProfileToStorage,
   getUserProfileFromStorage,
   clearUserProfileFromStorage,
-} from '@/utils/storage';
+} from "@/utils/storage";
 
 export interface UserProfile {
   uid: string;
@@ -34,7 +34,9 @@ const AuthContext = createContext<AuthContextType>({
   signOut: async () => {},
 });
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -47,15 +49,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setUser({
             uid: storedData.uid,
             email: storedData.email,
-            displayName: storedData.fullName || storedData.email.split('@')[0],
-            phoneNumber: storedData.phoneNumber || '+91 98765 43210',
-            bio: storedData.bio || 'Passionate group trip explorer & photographer 🏔️',
-            role: storedData.role || 'Trip Lead Explorer',
+            displayName: storedData.fullName || storedData.email.split("@")[0],
+            phoneNumber: storedData.phoneNumber || "+91 98765 43210",
+            bio:
+              storedData.bio ||
+              "Passionate group trip explorer & photographer 🏔️",
+            role: storedData.role || "Trip Lead Explorer",
             photoURL: storedData.avatarUrl || null,
           });
         }
       } catch (e) {
-        console.warn('Error loading stored user:', e);
+        console.warn("Error loading stored user:", e);
       } finally {
         setIsLoading(false);
       }
@@ -67,15 +71,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signIn = async (email: string, name?: string) => {
     setIsLoading(true);
     const existing = await getUserProfileFromStorage();
-    const displayName = name || existing?.fullName || email.split('@')[0];
+    const displayName = name || existing?.fullName || email.split("@")[0];
 
     const profile: UserProfile = {
-      uid: existing?.uid || 'user_' + Date.now(),
+      uid: existing?.uid || "user_" + Date.now(),
       email,
       displayName,
-      phoneNumber: existing?.phoneNumber || '+91 98765 43210',
-      bio: existing?.bio || 'Passionate group trip explorer & photographer 🏔️',
-      role: existing?.role || 'Trip Lead Explorer',
+      phoneNumber: existing?.phoneNumber || "+91 98765 43210",
+      bio: existing?.bio || "Passionate group trip explorer & photographer 🏔️",
+      role: existing?.role || "Trip Lead Explorer",
       photoURL: existing?.avatarUrl || null,
     };
 
@@ -97,12 +101,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signUp = async (email: string, name: string) => {
     setIsLoading(true);
     const profile: UserProfile = {
-      uid: 'user_' + Date.now(),
+      uid: "user_" + Date.now(),
       email,
       displayName: name,
-      phoneNumber: '+91 98765 43210',
-      bio: 'Passionate group trip explorer & photographer 🏔️',
-      role: 'Trip Lead Explorer',
+      phoneNumber: "+91 98765 43210",
+      bio: "Passionate group trip explorer & photographer 🏔️",
+      role: "Trip Lead Explorer",
       photoURL: null,
     };
 
@@ -149,7 +153,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, signIn, signUp, updateProfile, signOut }}>
+    <AuthContext.Provider
+      value={{ user, isLoading, signIn, signUp, updateProfile, signOut }}
+    >
       {children}
     </AuthContext.Provider>
   );

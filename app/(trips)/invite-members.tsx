@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -7,12 +7,12 @@ import {
   StyleSheet,
   ScrollView,
   Share,
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useAppTheme } from '@/context/ThemeContext';
-import Feather from '@expo/vector-icons/Feather';
-import { useLocalSearchParams, useRouter } from 'expo-router';
-import { getTripsFromStorage, saveTripToStorage } from '@/utils/storage';
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useAppTheme } from "@/context/ThemeContext";
+import Feather from "@expo/vector-icons/Feather";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { getTripsFromStorage, saveTripToStorage } from "@/utils/storage";
 
 export interface FriendContact {
   id: string;
@@ -26,24 +26,41 @@ export default function InviteMembersScreen() {
   const router = useRouter();
   const { tripId } = useLocalSearchParams<{ tripId?: string }>();
 
-  const [customInput, setCustomInput] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [customInput, setCustomInput] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [friendsList, setFriendsList] = useState<FriendContact[]>([
-    { id: 'l1', name: 'Lokesh Kumar', phone: '+91 98765 10001', selected: false },
-    { id: 'n1', name: 'Naren K.', phone: '+91 98765 10002', selected: false },
-    { id: 'p1', name: 'Pradeep V.', phone: '+91 98765 10003', selected: false },
-    { id: 'r1', name: 'Ruban S.', phone: '+91 98765 10004', selected: false },
-    { id: 's1', name: 'Sudharshan R.', phone: '+91 98765 10005', selected: false },
-    { id: 's2', name: 'Suriyah M.', phone: '+91 98765 10006', selected: false },
-    { id: 's3', name: 'Suryan K.', phone: '+91 98765 10007', selected: false },
-    { id: 't1', name: 'Thakshin S.', phone: '+91 98765 10008', selected: false },
-    { id: 't2', name: 'Tharun G.', phone: '+91 98765 10009', selected: false },
-    { id: 'v1', name: 'Varun P.', phone: '+91 98765 10010', selected: false },
+    {
+      id: "l1",
+      name: "Lokesh Kumar",
+      phone: "+91 98765 10001",
+      selected: false,
+    },
+    { id: "n1", name: "Naren K.", phone: "+91 98765 10002", selected: false },
+    { id: "p1", name: "Pradeep V.", phone: "+91 98765 10003", selected: false },
+    { id: "r1", name: "Ruban S.", phone: "+91 98765 10004", selected: false },
+    {
+      id: "s1",
+      name: "Sudharshan R.",
+      phone: "+91 98765 10005",
+      selected: false,
+    },
+    { id: "s2", name: "Suriyah M.", phone: "+91 98765 10006", selected: false },
+    { id: "s3", name: "Suryan K.", phone: "+91 98765 10007", selected: false },
+    {
+      id: "t1",
+      name: "Thakshin S.",
+      phone: "+91 98765 10008",
+      selected: false,
+    },
+    { id: "t2", name: "Tharun G.", phone: "+91 98765 10009", selected: false },
+    { id: "v1", name: "Varun P.", phone: "+91 98765 10010", selected: false },
   ]);
 
   const toggleSelectFriend = (id: string) => {
     setFriendsList((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, selected: !item.selected } : item))
+      prev.map((item) =>
+        item.id === id ? { ...item, selected: !item.selected } : item,
+      ),
     );
   };
 
@@ -68,8 +85,9 @@ export default function InviteMembersScreen() {
   const handleShareInviteLink = async () => {
     try {
       await Share.share({
-        message: 'Join our collaborative group trip on SAFNORA! Download: https://safnora.com/invite',
-        title: 'Invite to SAFNORA Trip',
+        message:
+          "Join our collaborative group trip on SAFNORA! Download: https://safnora.com/invite",
+        title: "Invite to SAFNORA Trip",
       });
     } catch (e) {
       console.warn(e);
@@ -79,41 +97,82 @@ export default function InviteMembersScreen() {
   const filteredFriends = friendsList.filter(
     (f) =>
       f.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      f.phone.includes(searchQuery)
+      f.phone.includes(searchQuery),
   );
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: colors.background }]}
+    >
       {/* Top Header */}
       <View style={[styles.header, { borderBottomColor: colors.border }]}>
-        <TouchableOpacity onPress={() => router.back()} style={[styles.backButton, { backgroundColor: colors.surfaceSubtle }]}>
+        <TouchableOpacity
+          onPress={() => router.back()}
+          style={[styles.backButton, { backgroundColor: colors.surfaceSubtle }]}
+        >
           <Feather name="chevron-left" size={24} color={colors.text} />
         </TouchableOpacity>
         <View style={styles.headerTextWrapper}>
-          <Text style={[styles.headerTitle, { color: colors.text }]}>Invite Trip Members</Text>
-          <Text style={[styles.headerSubtitle, { color: colors.textSecondary }]}>Add companions to your trip workspace</Text>
+          <Text style={[styles.headerTitle, { color: colors.text }]}>
+            Invite Trip Members
+          </Text>
+          <Text
+            style={[styles.headerSubtitle, { color: colors.textSecondary }]}
+          >
+            Add companions to your trip workspace
+          </Text>
         </View>
       </View>
 
-      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
         {/* Quick Share Link Banner */}
-        <View style={[styles.shareCard, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+        <View
+          style={[
+            styles.shareCard,
+            { backgroundColor: colors.surface, borderColor: colors.border },
+          ]}
+        >
           <View style={styles.shareIconWrapper}>
             <Feather name="link-2" size={20} color="#00A896" />
           </View>
           <View style={styles.shareTextWrapper}>
-            <Text style={[styles.shareTitle, { color: colors.text }]}>Share Trip Invite Link</Text>
-            <Text style={[styles.shareSubtitle, { color: colors.textSecondary }]}>Anyone with the link can join</Text>
+            <Text style={[styles.shareTitle, { color: colors.text }]}>
+              Share Trip Invite Link
+            </Text>
+            <Text
+              style={[styles.shareSubtitle, { color: colors.textSecondary }]}
+            >
+              Anyone with the link can join
+            </Text>
           </View>
-          <TouchableOpacity style={styles.shareLinkButton} onPress={handleShareInviteLink} activeOpacity={0.8}>
-            <Feather name="share-2" size={14} color="#FFFFFF" style={{ marginRight: 4 }} />
+          <TouchableOpacity
+            style={styles.shareLinkButton}
+            onPress={handleShareInviteLink}
+            activeOpacity={0.8}
+          >
+            <Feather
+              name="share-2"
+              size={14}
+              color="#FFFFFF"
+              style={{ marginRight: 4 }}
+            />
             <Text style={styles.shareLinkText}>Share</Text>
           </TouchableOpacity>
         </View>
 
         {/* Add by Email / Phone Direct Form */}
-        <Text style={[styles.sectionTitle, { color: colors.text }]}>Add by Email or Phone</Text>
-        <View style={[styles.directAddCard, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>
+          Add by Email or Phone
+        </Text>
+        <View
+          style={[
+            styles.directAddCard,
+            { backgroundColor: colors.surface, borderColor: colors.border },
+          ]}
+        >
           <TextInput
             style={[styles.directInput, { color: colors.text }]}
             placeholder="Enter friend's email or phone number..."
@@ -124,9 +183,23 @@ export default function InviteMembersScreen() {
         </View>
 
         {/* Search Contacts List */}
-        <Text style={[styles.sectionTitle, { color: colors.text, marginTop: 20 }]}>Select from SAFNORA Friends</Text>
-        <View style={[styles.searchWrapper, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-          <Feather name="search" size={18} color={colors.textMuted} style={{ marginRight: 10 }} />
+        <Text
+          style={[styles.sectionTitle, { color: colors.text, marginTop: 20 }]}
+        >
+          Select from SAFNORA Friends
+        </Text>
+        <View
+          style={[
+            styles.searchWrapper,
+            { backgroundColor: colors.surface, borderColor: colors.border },
+          ]}
+        >
+          <Feather
+            name="search"
+            size={18}
+            color={colors.textMuted}
+            style={{ marginRight: 10 }}
+          />
           <TextInput
             style={[styles.searchInput, { color: colors.text }]}
             placeholder="Search friends..."
@@ -137,13 +210,21 @@ export default function InviteMembersScreen() {
         </View>
 
         {/* Friends Selector List */}
-        <View style={[styles.listCard, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+        <View
+          style={[
+            styles.listCard,
+            { backgroundColor: colors.surface, borderColor: colors.border },
+          ]}
+        >
           {filteredFriends.map((friend, idx) => (
             <TouchableOpacity
               key={friend.id}
               style={[
                 styles.friendRow,
-                idx < filteredFriends.length - 1 && { borderBottomWidth: 1, borderBottomColor: colors.border },
+                idx < filteredFriends.length - 1 && {
+                  borderBottomWidth: 1,
+                  borderBottomColor: colors.border,
+                },
               ]}
               onPress={() => toggleSelectFriend(friend.id)}
               activeOpacity={0.8}
@@ -153,12 +234,25 @@ export default function InviteMembersScreen() {
               </View>
 
               <View style={styles.friendInfo}>
-                <Text style={[styles.friendName, { color: colors.text }]}>{friend.name}</Text>
-                <Text style={[styles.friendPhone, { color: colors.textSecondary }]}>{friend.phone}</Text>
+                <Text style={[styles.friendName, { color: colors.text }]}>
+                  {friend.name}
+                </Text>
+                <Text
+                  style={[styles.friendPhone, { color: colors.textSecondary }]}
+                >
+                  {friend.phone}
+                </Text>
               </View>
 
-              <View style={[styles.checkbox, friend.selected && styles.checkboxSelected]}>
-                {friend.selected ? <Feather name="check" size={14} color="#FFFFFF" /> : null}
+              <View
+                style={[
+                  styles.checkbox,
+                  friend.selected && styles.checkboxSelected,
+                ]}
+              >
+                {friend.selected ? (
+                  <Feather name="check" size={14} color="#FFFFFF" />
+                ) : null}
               </View>
             </TouchableOpacity>
           ))}
@@ -166,11 +260,26 @@ export default function InviteMembersScreen() {
       </ScrollView>
 
       {/* Fixed Bottom Confirmation Bar */}
-      <View style={[styles.bottomBar, { backgroundColor: colors.surface, borderTopColor: colors.border }]}>
-        <TouchableOpacity style={styles.confirmButton} onPress={handleAddSelected} activeOpacity={0.85}>
-          <Feather name="user-plus" size={18} color="#FFFFFF" style={{ marginRight: 8 }} />
+      <View
+        style={[
+          styles.bottomBar,
+          { backgroundColor: colors.surface, borderTopColor: colors.border },
+        ]}
+      >
+        <TouchableOpacity
+          style={styles.confirmButton}
+          onPress={handleAddSelected}
+          activeOpacity={0.85}
+        >
+          <Feather
+            name="user-plus"
+            size={18}
+            color="#FFFFFF"
+            style={{ marginRight: 8 }}
+          />
           <Text style={styles.confirmButtonText}>
-            Add {selectedCount > 0 ? `${selectedCount} Selected` : 'Members'} to Trip
+            Add {selectedCount > 0 ? `${selectedCount} Selected` : "Members"} to
+            Trip
           </Text>
         </TouchableOpacity>
       </View>
@@ -181,8 +290,8 @@ export default function InviteMembersScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 16,
     paddingVertical: 14,
     borderBottomWidth: 1,
@@ -191,17 +300,17 @@ const styles = StyleSheet.create({
     width: 38,
     height: 38,
     borderRadius: 19,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginRight: 12,
   },
   headerTextWrapper: { flex: 1 },
-  headerTitle: { fontSize: 18, fontWeight: '800' },
+  headerTitle: { fontSize: 18, fontWeight: "800" },
   headerSubtitle: { fontSize: 12, marginTop: 1 },
   scrollContent: { padding: 20, paddingBottom: 100 },
   shareCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     padding: 14,
     borderRadius: 16,
     borderWidth: 1,
@@ -211,36 +320,36 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#EEF6F8',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#EEF6F8",
+    justifyContent: "center",
+    alignItems: "center",
     marginRight: 12,
   },
   shareTextWrapper: { flex: 1 },
-  shareTitle: { fontSize: 14, fontWeight: '700' },
+  shareTitle: { fontSize: 14, fontWeight: "700" },
   shareSubtitle: { fontSize: 12, marginTop: 1 },
   shareLinkButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#00A896',
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#00A896",
     paddingVertical: 8,
     paddingHorizontal: 14,
     borderRadius: 18,
   },
-  shareLinkText: { color: '#FFFFFF', fontWeight: '700', fontSize: 13 },
-  sectionTitle: { fontSize: 15, fontWeight: '700', marginBottom: 10 },
+  shareLinkText: { color: "#FFFFFF", fontWeight: "700", fontSize: 13 },
+  sectionTitle: { fontSize: 15, fontWeight: "700", marginBottom: 10 },
   directAddCard: {
     borderRadius: 16,
     borderWidth: 1,
     paddingHorizontal: 14,
     height: 50,
-    justifyContent: 'center',
+    justifyContent: "center",
     marginBottom: 10,
   },
   directInput: { fontSize: 14 },
   searchWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     height: 48,
     borderRadius: 14,
     borderWidth: 1,
@@ -254,38 +363,38 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
   },
   friendRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingVertical: 12,
   },
   avatarCircle: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#00A896',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#00A896",
+    justifyContent: "center",
+    alignItems: "center",
     marginRight: 12,
   },
-  avatarText: { color: '#FFFFFF', fontWeight: '800', fontSize: 15 },
+  avatarText: { color: "#FFFFFF", fontWeight: "800", fontSize: 15 },
   friendInfo: { flex: 1 },
-  friendName: { fontSize: 15, fontWeight: '700' },
+  friendName: { fontSize: 15, fontWeight: "700" },
   friendPhone: { fontSize: 12, marginTop: 2 },
   checkbox: {
     width: 24,
     height: 24,
     borderRadius: 12,
     borderWidth: 2,
-    borderColor: '#94A3B8',
-    justifyContent: 'center',
-    alignItems: 'center',
+    borderColor: "#94A3B8",
+    justifyContent: "center",
+    alignItems: "center",
   },
   checkboxSelected: {
-    backgroundColor: '#00A896',
-    borderColor: '#00A896',
+    backgroundColor: "#00A896",
+    borderColor: "#00A896",
   },
   bottomBar: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
@@ -295,15 +404,15 @@ const styles = StyleSheet.create({
   confirmButton: {
     height: 52,
     borderRadius: 26,
-    backgroundColor: '#00A896',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#00A896',
+    backgroundColor: "#00A896",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#00A896",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 4,
   },
-  confirmButtonText: { color: '#FFFFFF', fontWeight: '800', fontSize: 15 },
+  confirmButtonText: { color: "#FFFFFF", fontWeight: "800", fontSize: 15 },
 });
