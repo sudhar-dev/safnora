@@ -29,11 +29,16 @@ export default function InviteMembersScreen() {
   const [customInput, setCustomInput] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [friendsList, setFriendsList] = useState<FriendContact[]>([
-    { id: '1', name: 'Arun Kumar', phone: '+91 98765 11111', selected: false },
-    { id: '2', name: 'Kavya Sharma', phone: '+91 98765 22222', selected: false },
-    { id: '3', name: 'Praveen Raj', phone: '+91 98765 33333', selected: false },
-    { id: '4', name: 'Ananya Verma', phone: '+91 98765 44444', selected: false },
-    { id: '5', name: 'Siddharth Roy', phone: '+91 98765 55555', selected: false },
+    { id: 'l1', name: 'Lokesh Kumar', phone: '+91 98765 10001', selected: false },
+    { id: 'n1', name: 'Naren K.', phone: '+91 98765 10002', selected: false },
+    { id: 'p1', name: 'Pradeep V.', phone: '+91 98765 10003', selected: false },
+    { id: 'r1', name: 'Ruban S.', phone: '+91 98765 10004', selected: false },
+    { id: 's1', name: 'Sudharshan R.', phone: '+91 98765 10005', selected: false },
+    { id: 's2', name: 'Suriyah M.', phone: '+91 98765 10006', selected: false },
+    { id: 's3', name: 'Suryan K.', phone: '+91 98765 10007', selected: false },
+    { id: 't1', name: 'Thakshin S.', phone: '+91 98765 10008', selected: false },
+    { id: 't2', name: 'Tharun G.', phone: '+91 98765 10009', selected: false },
+    { id: 'v1', name: 'Varun P.', phone: '+91 98765 10010', selected: false },
   ]);
 
   const toggleSelectFriend = (id: string) => {

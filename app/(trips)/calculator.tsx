@@ -19,7 +19,10 @@ export default function ExpenseCalculatorScreen() {
   const [expenseTitle, setExpenseTitle] = useState('');
   const [amount, setAmount] = useState('');
   const [paidBy, setPaidBy] = useState('Thiru Arasu');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [splitMembers, setSplitMembers] = useState(5);
+
+  const memberOptions = ['Thiru Arasu', 'Arun Kumar', 'Kavya Sharma', 'Praveen Raj', 'Ananya Verma'];
 
   const [expenses, setExpenses] = useState([
     { id: '1', title: 'Resort Stay & Cabins', amount: 12500, paidBy: 'Thiru Arasu', perPerson: 2500 },
@@ -47,6 +50,7 @@ export default function ExpenseCalculatorScreen() {
 
     setExpenseTitle('');
     setAmount('');
+    setIsDropdownOpen(false);
   };
 
   const totalExpense = expenses.reduce((sum, item) => sum + item.amount, 0);
@@ -96,7 +100,7 @@ export default function ExpenseCalculatorScreen() {
             onChangeText={setExpenseTitle}
           />
 
-          <View style={styles.amountPaidRow}>
+          <View style={[styles.amountPaidRow, { zIndex: isDropdownOpen ? 1000 : 1 }]}>
             <View style={{ flex: 1 }}>
               <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>Amount (₹)</Text>
               <TextInput
@@ -109,13 +113,39 @@ export default function ExpenseCalculatorScreen() {
               />
             </View>
 
-            <View style={{ flex: 1 }}>
+            {/* Interactive Paid By Dropdown Selector */}
+            <View style={{ flex: 1, position: 'relative', zIndex: 1000 }}>
               <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>Paid By</Text>
-              <TextInput
-                style={[styles.input, { backgroundColor: colors.surfaceSubtle, color: colors.text, borderColor: colors.border }]}
-                value={paidBy}
-                onChangeText={setPaidBy}
-              />
+              <TouchableOpacity
+                style={[styles.dropdownSelector, { backgroundColor: colors.surfaceSubtle, borderColor: colors.border }]}
+                onPress={() => setIsDropdownOpen(!isDropdownOpen)}
+                activeOpacity={0.8}
+              >
+                <Text style={[styles.dropdownValueText, { color: colors.text }]} numberOfLines={1}>
+                  {paidBy}
+                </Text>
+                <Feather name={isDropdownOpen ? 'chevron-up' : 'chevron-down'} size={18} color={colors.textMuted} />
+              </TouchableOpacity>
+
+              {isDropdownOpen ? (
+                <View style={[styles.dropdownListContainer, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+                  {memberOptions.map((opt) => (
+                    <TouchableOpacity
+                      key={opt}
+                      style={[styles.dropdownOptionRow, paidBy === opt && styles.dropdownOptionSelected]}
+                      onPress={() => {
+                        setPaidBy(opt);
+                        setIsDropdownOpen(false);
+                      }}
+                    >
+                      <Text style={[styles.dropdownOptionText, { color: colors.text }, paidBy === opt && styles.dropdownOptionTextSelected]}>
+                        {opt}
+                      </Text>
+                      {paidBy === opt ? <Feather name="check" size={14} color="#00A896" /> : null}
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              ) : null}
             </View>
           </View>
 
@@ -194,10 +224,53 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 1,
     marginBottom: 10,
+    position: 'relative',
+    zIndex: 100,
   },
   inputLabel: { fontSize: 13, fontWeight: '700', marginBottom: 6 },
   input: { height: 48, borderRadius: 12, borderWidth: 1, paddingHorizontal: 14, fontSize: 14, marginBottom: 14 },
-  amountPaidRow: { flexDirection: 'row', gap: 12 },
+  amountPaidRow: {
+    flexDirection: 'row',
+    gap: 12,
+    marginBottom: 14,
+    position: 'relative',
+    zIndex: 500,
+  },
+  dropdownSelector: {
+    height: 48,
+    borderRadius: 12,
+    borderWidth: 1,
+    paddingHorizontal: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  dropdownValueText: { fontSize: 13, fontWeight: '600', flex: 1, marginRight: 4 },
+  dropdownListContainer: {
+    position: 'absolute',
+    top: 74,
+    left: 0,
+    right: 0,
+    borderRadius: 14,
+    borderWidth: 1,
+    paddingVertical: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 10,
+    zIndex: 9999,
+  },
+  dropdownOptionRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+  },
+  dropdownOptionSelected: { backgroundColor: '#EEF6F8' },
+  dropdownOptionText: { fontSize: 13, fontWeight: '600' },
+  dropdownOptionTextSelected: { color: '#00A896', fontWeight: '800' },
   addButton: {
     height: 48,
     borderRadius: 24,
@@ -206,6 +279,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 4,
+    zIndex: 1,
   },
   addButtonText: { color: '#FFFFFF', fontWeight: '800', fontSize: 15 },
   historyCard: {

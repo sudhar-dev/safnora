@@ -118,8 +118,12 @@ export default function ProfileTabScreen() {
             <Text style={styles.themeValueText}>Light Mode</Text>
           </View>
 
-          {/* Notifications */}
-          <TouchableOpacity style={[styles.menuRow, { borderBottomColor: colors.border }]} activeOpacity={0.7}>
+          {/* Push Notifications */}
+          <TouchableOpacity
+            style={[styles.menuRow, { borderBottomColor: colors.border }]}
+            onPress={() => router.push('/notifications-settings' as any)}
+            activeOpacity={0.7}
+          >
             <View style={styles.menuLeft}>
               <View style={[styles.menuIconWrapper, { backgroundColor: '#6366F115' }]}>
                 <Feather name="bell" size={18} color="#6366F1" />
@@ -130,7 +134,11 @@ export default function ProfileTabScreen() {
           </TouchableOpacity>
 
           {/* Privacy Controls */}
-          <TouchableOpacity style={[styles.menuRow, { borderBottomColor: colors.border }]} activeOpacity={0.7}>
+          <TouchableOpacity
+            style={[styles.menuRow, { borderBottomColor: colors.border }]}
+            onPress={() => router.push('/privacy-settings' as any)}
+            activeOpacity={0.7}
+          >
             <View style={styles.menuLeft}>
               <View style={[styles.menuIconWrapper, { backgroundColor: '#10B98115' }]}>
                 <Feather name="lock" size={18} color="#10B981" />
@@ -141,7 +149,11 @@ export default function ProfileTabScreen() {
           </TouchableOpacity>
 
           {/* Help & Support */}
-          <TouchableOpacity style={styles.menuRow} activeOpacity={0.7}>
+          <TouchableOpacity
+            style={styles.menuRow}
+            onPress={() => router.push('/help-support' as any)}
+            activeOpacity={0.7}
+          >
             <View style={styles.menuLeft}>
               <View style={[styles.menuIconWrapper, { backgroundColor: '#F59E0B15' }]}>
                 <Feather name="help-circle" size={18} color="#F59E0B" />
